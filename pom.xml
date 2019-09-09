@@ -1,0 +1,60 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>de.dks.utils</groupId>
+  <artifactId>OptionsLib</artifactId>
+  <version>0.1-PRERELEASE</version>
+  <packaging>jar</packaging>
+  
+  <build>
+    <sourceDirectory>src</sourceDirectory>
+        <plugins>
+        	<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<version>3.6.0</version>
+				<configuration>
+					<source>1.8</source>
+					<target>1.8</target>
+				</configuration>
+			</plugin>
+			<plugin>
+    			<groupId>org.apache.maven.plugins</groupId>
+    			<artifactId>maven-shade-plugin</artifactId>
+    			<version>3.2.1</version>
+    			<executions>
+        			<execution>
+            		<goals>
+                		<goal>shade</goal>
+            		</goals>
+            		<configuration>
+                		<shadedArtifactAttached>true</shadedArtifactAttached>
+                		<transformers>
+                    		<transformer implementation=
+                      "org.apache.maven.plugins.shade.resource.ManifestResourceTransformer">
+                        	<mainClass>de.dks.examples.options.Example</mainClass>
+                			</transformer>
+            			</transformers>
+        			</configuration>
+        			</execution>
+    			</executions>
+			</plugin>
+    	</plugins>
+
+  </build>
+  <organization>
+  	<name>Daniel Krajzewicz</name>
+  	<url>https://www.krajzewicz.de/</url>
+  </organization>
+  <name>OptionsLib</name>
+  <url>https://github.com/dkrajzew/optionslib_java.git</url>
+  <description>A java library for parsing command line options, supporting type-checking and configurations.</description>
+	<repositories>
+	</repositories>
+  
+  <dependencies>
+  </dependencies>
+  <dependencyManagement>
+  	<dependencies>
+  	</dependencies>
+  </dependencyManagement>
+</project>
