@@ -8,9 +8,9 @@ import java.util.Iterator;
 import java.util.Vector;
 
 public class OptionsCont {
-	private HashMap<String, Option> myOptionsMap;
-	private HashMap<Option, String> myOption2Section;
-	private Vector<Option> myOptions;
+	private HashMap<String, Option> myOptionsMap = new HashMap<>();
+	private HashMap<Option, String> myOption2Section = new HashMap<>();
+	private Vector<Option> myOptions = new Vector<>();
 	private String myCurrentSection;
 	private String myHelpHead, myHelpTail;
 	

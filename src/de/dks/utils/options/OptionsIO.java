@@ -15,9 +15,11 @@ public class OptionsIO {
 	public static boolean parseAndLoad(OptionsCont into, String[] args, String configurationName, boolean continueOnError, boolean acceptUnknown) throws ParserConfigurationException, SAXException, IOException {
 	    boolean ok = OptionsParser.parse(into, args, continueOnError);
 	    if(ok) into.remarkUnset();
-    	if(ok) ok = load(into, configurationName);
-	    if(ok) into.remarkUnset();
-	    if(ok) ok = OptionsParser.parse(into, args, continueOnError);
+	    if(configurationName!=null && !"".equals(configurationName)) {
+	    	if(ok) ok = load(into, configurationName);
+	    	if(ok) into.remarkUnset();
+	    	if(ok) ok = OptionsParser.parse(into, args, continueOnError);
+	    }
 	    return ok;
 	}
 

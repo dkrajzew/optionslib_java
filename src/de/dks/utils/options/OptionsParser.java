@@ -6,7 +6,7 @@ import java.util.Vector;
 public class OptionsParser {
 	public static boolean parse(OptionsCont into, String[] args, boolean continueOnError) {
 	    boolean ok = true;
-	    for(int pos=1; pos<args.length;) {
+	    for(int pos=0; pos<args.length;) {
 	        // try to parse a token combination
 	        int add = parse(into, args, pos);
 	        // check whether an error occured
@@ -88,7 +88,7 @@ public class OptionsParser {
 	    int tokens = 1;
 	    // otherwise (one needed a parameter)
 	    String param = "";
-	    if(options.charAt(i)=='=') {
+	    if(i<options.length() && options.charAt(i)=='=') {
 	        // maybe the parameter is within the string
 	        param = options.substring(i+1);
 	    }

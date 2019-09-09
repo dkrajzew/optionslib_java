@@ -5,13 +5,8 @@ public class Option_Bool extends Option {
 	
 	
 	public Option_Bool() {
-		super(false);
-	}
-	
-	
-	public Option_Bool(boolean value) {
 		super(true);
-		myValue = value;
+		myValue = false;
 	}
 	
 	
