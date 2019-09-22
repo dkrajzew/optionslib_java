@@ -1,0 +1,13 @@
+extra_search_directory:../../bin/
+interpreter:java
+executable:de.dks.examples.options.Tester
+copy_test_path:optionslib.jar
+copy_test_path:options.txt
+copy_test_path:config.xml
+
+[run_dependent_text]
+stdout:{INTERNAL writedir}{REPLACE <writedir>}
+stderr:{INTERNAL writedir}{REPLACE <writedir>}
+output:{INTERNAL writedir}{REPLACE <writedir>}
+errors:{INTERNAL writedir}{REPLACE <writedir>}
+

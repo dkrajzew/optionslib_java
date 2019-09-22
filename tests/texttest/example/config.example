@@ -1,0 +1,4 @@
+extra_search_directory:../../bin/
+interpreter:java
+executable:de.dks.examples.options.Example
+copy_test_path:optionslib.jar
