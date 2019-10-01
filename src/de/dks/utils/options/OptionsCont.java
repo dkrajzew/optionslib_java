@@ -199,8 +199,8 @@ public class OptionsCont {
 
 
 	public Vector<String> getSynonymes(String name) {
-	    Option o = getOption(name);
-	    return getSynonymes(o);
+	    Option option = getOption(name);
+	    return getSynonymes(option);
 	}
 
 
@@ -212,6 +212,7 @@ public class OptionsCont {
 	    		ret.add(name);
 	    	}
 	    }
+	    Collections.sort(ret, new SortByLengthComparator()) ;
 	    return ret;
 	}
 
@@ -248,7 +249,7 @@ public class OptionsCont {
 	        sectionIndentSting += " ";
 	    }
 	    // 
-	    if(myHelpHead.length()!=0) {
+	    if(myHelpHead!=null) {
 	        os.println(myHelpHead);
 	    }
 	    String lastSection = "";
@@ -256,21 +257,21 @@ public class OptionsCont {
 			Option option = i.next();
 	        // check whether a new section starts
 	        String optSection = myOption2Section.get(option);
-	        if(lastSection!=optSection) {
+	        if(optSection!=null&&!"".contentEquals(optSection)&&lastSection!=optSection) {
 	            lastSection = optSection;
 	            os.println(sectionIndentSting+lastSection);
 	        }
 	        // write the option
 	        String optNames = getHelpFormattedSynonymes(option, optionIndent, divider);
 	        // write the divider
-	        os.println(optionIndentSting+optNames);
+	        os.print(optionIndentSting+optNames);
 	        int owidth = optNames.length();
 	        // write the description
 	        int beg = 0;
 	        String desc = option.getDescription();
 	        int offset = divider+optMaxWidth-owidth;
             int startCol = divider+optMaxWidth+optionIndent;
-	        while(beg<desc.length()) {
+	        while(desc!=null&&beg<desc.length()) {
 	            for(int j=0; j<offset; ++j) {
 	                os.print(" ");
 	            }
@@ -287,45 +288,48 @@ public class OptionsCont {
 	        }
 	        os.println();
 	    }
-	    if(myHelpTail.length()!=0) {
+	    if(myHelpTail!=null) {
 	    	os.println(myHelpTail);
 	    }
 	}
 
 	
-	/*
-	std::ostream &
-	operator<<(std::ostream &os, const OptionsCont &oc) {
-	    vector<string> known;
-	    known.reserve(oc.myOptionsMap.size());
-	    for(std::map<std::string, Option*>::const_iterator i=oc.myOptionsMap.begin(); i!=oc.myOptionsMap.end(); i++) {
-	        vector<string>::iterator j=find(known.begin(), known.end(), (*i).first);
-	        if(j==known.end()) {
-	            Option *o = (*i).second;
-	            if(o->isSet()) {
-	                vector<string> synonymes = oc.getSynonymes((*i).first);
-	                os << (*i).first;
-	                if(synonymes.size()>0) {
-	                    os << " (";
-	                    for(j=synonymes.begin(); j!=synonymes.end();) {
-	                        known.push_back(*j);
-	                        os << *j++;
-	                        if(j!=synonymes.end())
-	                            os << ", ";
-	                    }
-	                    os << ")";
-	                }
-	                os << ": " << o->getValueAsString();
-	                if(o->isDefault()) {
-	                    os << " (default)";
-	                }
-	                os << endl;
-	            }
+	public void printSetOptions(PrintStream os) {
+	    Vector<String> known = new Vector<>();
+	    for(Iterator<String> i=myOptionsMap.keySet().iterator(); i.hasNext(); ) { //std::map<std::string, Option*>::const_iterator i=oc.myOptionsMap.begin(); i!=oc.myOptionsMap.end(); i++) {
+	        //Vector<string>::iterator j=find(known.begin(), known.end(), (*i).first);
+	        String name = i.next();
+	        if(known.contains(name)) {
+	        	continue;
 	        }
+            Option o = myOptionsMap.get(name);
+            if(!o.isSet()) {
+            	continue;
+            }
+            Vector<String> synonymes = getSynonymes(name);
+            Iterator<String> j=synonymes.iterator();
+            String first = j.next();
+            os.print(first);
+            known.add(first);
+            if(j.hasNext()) {
+            	os.print(" (");
+                for(; j.hasNext(); ) {
+                	String name2 = j.next();
+                    known.add(name2);
+                    os.print(name2);
+                    if(j.hasNext()) {
+                    	os.print(", ");
+                    }
+                }
+                os.print(")");
+            }
+            os.print(": " + o.getValueAsString());
+            if(o.isDefault()) {
+            	os.print(" (default)");
+            }
+            os.println();
 	    }
-	    return os;
 	}
-	*/
 
 
 	public String getHelpFormattedSynonymes(Option option, int optionIndent, int divider) {

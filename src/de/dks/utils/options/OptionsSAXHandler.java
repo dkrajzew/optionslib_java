@@ -16,8 +16,12 @@ public class OptionsSAXHandler extends DefaultHandler {
 		myCurrentName = localName;
 	}
     
-	public void characters(String chars) throws SAXException {
-		myOptions.set(myCurrentName, chars);
+	public void characters(char[] ch, int start, int length) throws SAXException {
+		// https://howtodoinjava.com/xml/sax-parser-read-xml-example/, 15.09.2019
+		String value = new String(ch, start, length).trim();
+		if(value.length()>0) {
+			myOptions.set(myCurrentName, value);
+		}
 	}
 
 }

@@ -1,6 +1,7 @@
 package de.dks.examples.options;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.StringTokenizer;
@@ -20,13 +21,20 @@ public class Tester {
 	
 	private static OptionsCont loadDefinition() throws IOException {
 		OptionsCont options = new OptionsCont();
+		File f = new File("options.txt");
+		if(!f.exists()) {
+			return options;
+		}
 		BufferedReader in = new BufferedReader(new FileReader("options.txt"));
 		if(!in.ready()) {
 			in.close();
-			throw new RuntimeException("Could not open the definitions file ('options.txt')");
+			return options;
 		}
 	    while(in.ready()) {
-	        String line = in.readLine();
+	        String line = in.readLine().trim();
+	        if(line.length()==0) {
+	        	continue;
+	        }
 	        if(line.indexOf(';')<-1) {
 	            // ok, it's a subsection
 	        } else {
@@ -38,7 +46,7 @@ public class Tester {
 	            StringTokenizer st = new StringTokenizer(line, ";");
 	            while (st.hasMoreTokens()) {
 	            	String s = st.nextToken();
-	                if(type.length()==0) {
+	                if(type==null) {
 	                    type = s;
 	                    continue;
 	                }
@@ -53,49 +61,49 @@ public class Tester {
 	                }
 	            }
 	            // ... is it the tail/head help stuff?
-	            if(type=="HELPHEADTAIL") {
+	            if("HELPHEADTAIL".equals(type)) {
 	            	options.setHelpHeadAndTail(synonymes.elementAt(0), synonymes.elementAt(1));
 	                continue;
 	            }
-	            if(type=="CONFIG") {
+	            if("CONFIG".equals(type)) {
 	                configOptionName = synonymes.elementAt(0);
 	                continue;
 	            }
 	            // ... is it a named section begin?
-	            if(type=="SECTION") {
+	            if("SECTION".equals(type)) {
 	            	options.beginSection(synonymes.elementAt(0));
 	                continue;
 	            }
 	            // ... build the option, first
 	            Option option = null;
-	            if(type=="INT") {
-	                if(defaultValue.length()==0) {
+	            if("INT".equals(type)) {
+	                if(defaultValue==null) {
 	                    option = new Option_Integer();
 	                } else {
 	                    int v = Integer.parseInt(defaultValue);
 	                    option = new Option_Integer(v);
 	                }
-	            } else if(type=="DOUBLE") {
-	                if(defaultValue.length()==0) {
+	            } else if("DOUBLE".equals(type)) {
+	                if(defaultValue==null) {
 	                    option = new Option_Double();
 	                } else {
 	                    double v = Double.parseDouble(defaultValue);
 	                    option = new Option_Double(v);
 	                }
-	            } else if(type=="BOOL") {
-	                if(defaultValue.length()==0) {
+	            } else if("BOOL".equals(type)) {
+	                if(defaultValue==null) {
 	                    option = new Option_Bool();
 	                } else {
 	                    option = new Option_Bool();
 	                }
-	            } else if(type=="STRING") {
-	                if(defaultValue.length()==0) {
+	            } else if("STRING".equals(type)) {
+	                if(defaultValue==null) {
 	                    option = new Option_String();
 	                } else {
 	                    option = new Option_String(defaultValue);
 	                }
-	            } else if(type=="FILE") {
-	                if(defaultValue.length()==0) {
+	            } else if("FILE".equals(type)) {
+	                if(defaultValue==null) {
 	                    option = new Option_FileName();
 	                } else {
 	                    option = new Option_FileName(defaultValue);
@@ -114,7 +122,7 @@ public class Tester {
 	                synonymes.remove(0);
 	            }
 	            // ... add description if given
-	            if(description.length()!=0) {
+	            if(description!=null) {
 	            	options.setDescription(firstName, description);
 	            }
 	        }
@@ -132,11 +140,12 @@ public class Tester {
             if(OptionsIO.parseAndLoad(options, args, configOptionName, false, false)) {
             	options.printHelp(System.out, 80, 2, 2, 1);
             	System.out.println("-------------------------------------------------------------------------------");
-            	//std::cout << myOptions;
+            	options.printSetOptions(System.out);
             	System.out.println("-------------------------------------------------------------------------------");
             }
 	    } catch(Exception e) {
 	    	System.err.println(e.toString());
+	    	System.err.println("Quitting (on error).");
         }
 	}
 

@@ -12,11 +12,11 @@ import org.xml.sax.XMLReader;
 public class OptionsIO {
 	
 
-	public static boolean parseAndLoad(OptionsCont into, String[] args, String configurationName, boolean continueOnError, boolean acceptUnknown) throws ParserConfigurationException, SAXException, IOException {
+	public static boolean parseAndLoad(OptionsCont into, String[] args, String configOptionName, boolean continueOnError, boolean acceptUnknown) throws ParserConfigurationException, SAXException, IOException {
 	    boolean ok = OptionsParser.parse(into, args, continueOnError);
 	    if(ok) into.remarkUnset();
-	    if(configurationName!=null && !"".equals(configurationName)) {
-	    	if(ok) ok = load(into, configurationName);
+	    if(configOptionName!=null && !"".equals(configOptionName)) {
+	    	if(ok) ok = load(into, configOptionName);
 	    	if(ok) into.remarkUnset();
 	    	if(ok) ok = OptionsParser.parse(into, args, continueOnError);
 	    }
