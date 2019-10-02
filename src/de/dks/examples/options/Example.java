@@ -29,60 +29,60 @@ import de.dks.utils.options.OptionsIO;
  */
 public class Example {
 	/** @brief Builds the options container and sets the values from the given options
-	 * 
-	 * @param args The options given on the command line
-	 * @return The built options container
-	 * @throws ParserConfigurationException Thrown if the XML-parser could not be built
-	 * @throws SAXException Thrown on an XML-parsing error
-	 * @throws IOException Thrown if the configuration file could not be opened
-	 */
-	private static OptionsCont getOptions(String[] args) throws ParserConfigurationException, SAXException, IOException {
-		OptionsCont options = new OptionsCont();
-		options.setHelpHeadAndTail("Usage: example [option]+\n\nOptions:","");
-	    // function
-		options.add("name", 'n', new Option_String("World"));
-	    options.setDescription("name", "Defines how to call the user.");
-	    options.add("greet", 'g', new Option_String("Hello"));
-	    options.setDescription("greet", "Defines how to greet.");
-	    options.add("repeat", 'r', new Option_Integer());
-	    options.setDescription("repeat", "Sets an optional number of repetitions.");
-	    //
-	    options.add("help", '?', new Option_Bool());
-	    options.setDescription("help", "Prints this help screen.");
-	    // parse
-	    OptionsIO.parseAndLoad(options, args, "", false, false);
-	    return options;
-	}
+     * 
+     * @param args The options given on the command line
+     * @return The built options container
+     * @throws ParserConfigurationException Thrown if the XML-parser could not be built
+     * @throws SAXException Thrown on an XML-parsing error
+     * @throws IOException Thrown if the configuration file could not be opened
+     */
+    private static OptionsCont getOptions(String[] args) throws ParserConfigurationException, SAXException, IOException {
+        OptionsCont options = new OptionsCont();
+        options.setHelpHeadAndTail("Usage: example [option]+\n\nOptions:","");
+        // function
+        options.add("name", 'n', new Option_String("World"));
+        options.setDescription("name", "Defines how to call the user.");
+        options.add("greet", 'g', new Option_String("Hello"));
+        options.setDescription("greet", "Defines how to greet.");
+        options.add("repeat", 'r', new Option_Integer());
+        options.setDescription("repeat", "Sets an optional number of repetitions.");
+        //
+        options.add("help", '?', new Option_Bool());
+        options.setDescription("help", "Prints this help screen.");
+        // parse
+        OptionsIO.parseAndLoad(options, args, "", false, false);
+        return options;
+    }
 
-	
-	/** @brief The main method
-	 * 
-	 * Builds the options and parses them, prints the given greet string
-	 * @param args Command line options
-	 */
-	public static void main(String[] args) {
-	    try {
-	        // parse options
-	    	OptionsCont options = getOptions(args);
-	        // check for additional (meta) options
-	        if(options.getBool("help")) {
-	            // print the help screen
-	        	options.printHelp(System.out, 80, 2, 2, 1);
-	        } else {
-	            // do something
-	            String name = options.getString("name");
-	            String greet = options.getString("greet");
-	            int number = 1;
-	            if(options.isSet("repeat")) {
-	                number = options.getInteger("repeat");
-	            }
-	            for (int i=0; i<number; ++i) {
-	            	System.out.println(greet + " " + name + "!");
-	            }
-	        }
-	    } catch(Exception e) {
-	    	System.err.println(e.toString());
-	    }
-	}
+    
+    /** @brief The main method
+     * 
+     * Builds the options and parses them, prints the given greet string
+     * @param args Command line options
+     */
+    public static void main(String[] args) {
+        try {
+            // parse options
+            OptionsCont options = getOptions(args);
+            // check for additional (meta) options
+            if(options.getBool("help")) {
+                // print the help screen
+                options.printHelp(System.out, 80, 2, 2, 1);
+            } else {
+                // do something
+                String name = options.getString("name");
+                String greet = options.getString("greet");
+                int number = 1;
+                if(options.isSet("repeat")) {
+                    number = options.getInteger("repeat");
+                }
+                for (int i=0; i<number; ++i) {
+                    System.out.println(greet + " " + name + "!");
+                }
+            }
+        } catch(Exception e) {
+            System.err.println(e.toString());
+        }
+    }
 
 }

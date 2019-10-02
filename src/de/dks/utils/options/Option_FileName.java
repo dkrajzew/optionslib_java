@@ -10,41 +10,41 @@ package de.dks.utils.options;
  * @license Eclipse Public License v2.0 (EPL v2.0) 
  */
 public class Option_FileName extends Option_String {
-	/** @brief Constructor
-	 * 
-	 * The option is marked as being not set (having no value).
-	 */
-	public Option_FileName() {
-		super();
-	}
-	
-	
-	/** @brief Constructor
-	 * 
-	 * The given value is stored as the default value.
-	 * The option is marked as being set (having a value).
-	 * @param value The default value
-	 */
-	public Option_FileName(String value) {
-		super(value);
-	}
-	
-	
-	/** @brief Returns the type name, here: "filename"
-	 * @return The type name ("filename")
-	 */
-	@Override
-	public String getTypeName() {
-	    return "filename";
-	}
-	
+    /** @brief Constructor
+     * 
+     * The option is marked as being not set (having no value).
+     */
+    public Option_FileName() {
+        super();
+    }
+    
+    
+    /** @brief Constructor
+     * 
+     * The given value is stored as the default value.
+     * The option is marked as being set (having a value).
+     * @param value The default value
+     */
+    public Option_FileName(String value) {
+        super(value);
+    }
+    
+    
+    /** @brief Returns the type name, here: "filename"
+     * @return The type name ("filename")
+     */
+    @Override
+    public String getTypeName() {
+        return "filename";
+    }
+    
 
    /** @brief Returns whether this option is of the type "filename", true in this case
     * @return Whether this options is a file name (yes)
-	*/
-	@Override
-	public boolean isFileName()  {
-	    return true;
-	}
-	
+    */
+    @Override
+    public boolean isFileName()  {
+        return true;
+    }
+    
 }

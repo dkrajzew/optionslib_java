@@ -8,20 +8,20 @@ package de.dks.utils.options;
  * @license Eclipse Public License v2.0 (EPL v2.0) 
  */
 public abstract class Option {
-	/// @brief Information whether a new value can be assigned
-	private boolean myAmSetable;
+    /// @brief Information whether a new value can be assigned
+    private boolean myAmSetable;
 
-	/// @brief Information whether this option's value may be read
-	private boolean myAmSet;
+    /// @brief Information whether this option's value may be read
+    private boolean myAmSet;
 
-	/// @brief Information whether this option's value is the one given optionally at initialisation
-	private boolean myHaveDefaultValue;
+    /// @brief Information whether this option's value is the one given optionally at initialisation
+    private boolean myHaveDefaultValue;
 
-	/// @brief The description (what appears in the help screen) of the option
-	private String myDescription;
+    /// @brief The description (what appears in the help screen) of the option
+    private String myDescription;
 
-	
-	
+    
+    
     /** @brief constructor
      *
      * Use this constructor to build an option with a given type and no default value
@@ -32,29 +32,29 @@ public abstract class Option {
      * @param[in] hasDefault Whether a default values has been supplied
      */
     protected Option(boolean hasDefault) {
-	    myAmSetable = true;
-	    myAmSet = hasDefault;
-	    myHaveDefaultValue = hasDefault;
+        myAmSetable = true;
+        myAmSet = hasDefault;
+        myHaveDefaultValue = hasDefault;
     }
-		
-	
+        
+    
     /** @brief Returns whether this option's value may be read
      *
      * The option's value may be read if either a default value was
      *  given or the user supplied a value.
      * @return Whether the option has been set
      */
-	public boolean isSet() {
-	    return myAmSet;
-	}
+    public boolean isSet() {
+        return myAmSet;
+    }
 
 
    /** @brief Returns whether this option's value is the default value
-	* @return Whether the option has the defaulot value
-	*/
-	public boolean isDefault() {
-	    return myHaveDefaultValue;
-	}
+    * @return Whether the option has the defaulot value
+    */
+    public boolean isDefault() {
+        return myHaveDefaultValue;
+    }
 
 
    /** @brief Allows setting this option
@@ -64,7 +64,7 @@ public abstract class Option {
     *  method.
     */
    void remarkSetable() {
-	    myAmSetable = true;
+        myAmSetable = true;
    }
 
    
@@ -72,7 +72,7 @@ public abstract class Option {
     *
     * Pure virtual, this method has to be implemented by the respective type-aware subclasses
     * @return This option's value's type name
-	*/
+    */
    public abstract String getTypeName();
 
 
@@ -80,9 +80,9 @@ public abstract class Option {
     *
     * Returns false unless overridden (in Option_Filename)
     * @return Whether this options is a file name
-	*/
+    */
    public boolean isFileName()  {
-	    return false;
+        return false;
    }
 
 
@@ -92,24 +92,24 @@ public abstract class Option {
     * @param[in] value The value to set
     * @throw InvalidArgument if this option already has been set (see setSet())
     * @throw NotOfThisTypeException if it is not a string
-	*/
+    */
    public abstract void set(String value);
 
 
    /** @brief Adds a description (what appears in the help screen) to the option
     *
     * @param[in] desc The description to set
-	*/
+    */
    public void setDescription(String desc) {
-	    myDescription = desc;
+        myDescription = desc;
    }
 
 
    /** @brief Retuns the option's description
     * @return The option's description
-	*/
+    */
    public String getDescription()  {
-	    return myDescription;
+        return myDescription;
    }
 
 
@@ -118,7 +118,7 @@ public abstract class Option {
     * Throws an exception if not set.
     * Pure virtual, this method has to be implemented by the respective type-aware subclasses
     * @return The value as a string, if set
-	*/
+    */
    public abstract String getValueAsString();
    
 
@@ -129,12 +129,12 @@ public abstract class Option {
     * If yes, sets myAmSetable to false, myAmSet to true and myHaveDefaultValue to false
     */
    protected void setSet() {
-	    if(myAmSetable==false) {
-	        throw new RuntimeException("This option was already set.");
-	    }
-	    myAmSetable = false;
-	    myHaveDefaultValue = false;
-	    myAmSet = true;
+        if(myAmSetable==false) {
+            throw new RuntimeException("This option was already set.");
+        }
+        myAmSetable = false;
+        myHaveDefaultValue = false;
+        myAmSet = true;
    }
 
 }
