@@ -16,9 +16,29 @@ import de.dks.utils.options.Option_String;
 import de.dks.utils.options.OptionsCont;
 import de.dks.utils.options.OptionsIO;
 
+/**
+ * @class Tester
+ * @brief Used for tesing the library in conjunction with TextTest.
+ *  
+ * The tester application is just for internal testing purposes. 
+ * It reads a definitions file called "options.txt" which includes 
+ * definitions of options and other things to set up the options container. 
+ * Then the application performs the things defined by the 
+ * http://texttest.sourceforge.net/ test system.
+ * @author Daniel Krajzewicz 
+ * @copyright (c) Daniel Krajzewicz 2004-2019
+ * @license Eclipse Public License v2.0 (EPL v2.0) 
+ */
 public class Tester {
+	/// @brief The (optional) configuration file name
 	private static String configOptionName = "";
 	
+	
+	/** @brief Loads the definition for setting up options
+	 * 
+	 * @return The filled options container
+	 * @throws IOException If the options definitions file could not be loaded
+	 */
 	private static OptionsCont loadDefinition() throws IOException {
 		OptionsCont options = new OptionsCont();
 		File f = new File("options.txt");
@@ -132,6 +152,11 @@ public class Tester {
 	}	
 
 	
+	/** @brief The main method
+	 * 
+	 * Loads the definition of options, first. Parses them and prints the help string and the set options.
+	 * @param args The command line options
+	 */
 	public static void main(String[] args) {
 	    try {
 	        // load the definition

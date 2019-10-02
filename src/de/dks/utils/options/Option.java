@@ -1,5 +1,12 @@
 package de.dks.utils.options;
 
+/**
+ * @class Option
+ * @brief A base class for options.
+ * @author Daniel Krajzewicz 
+ * @copyright (c) Daniel Krajzewicz 2004-2019
+ * @license Eclipse Public License v2.0 (EPL v2.0) 
+ */
 public abstract class Option {
 	/// @brief Information whether a new value can be assigned
 	private boolean myAmSetable;
@@ -15,22 +22,21 @@ public abstract class Option {
 
 	
 	
-   /** @brief constructor
-    *
-    * Use this constructor to build an option with a given type and no default value
-    * Sets:
-    * @arg myAmSetable to true
-    * @arg myAmSet to false
-    * @arg myHaveDefaultValue to hasDefault
-    * @param[in] hasDefault Whether a default values has been supplied
-    */
-   protected Option(boolean hasDefault) {
-	   myAmSetable = true;
-	   myAmSet = hasDefault;
-	   myHaveDefaultValue = hasDefault;
-   }
-	
-	
+    /** @brief constructor
+     *
+     * Use this constructor to build an option with a given type and no default value
+     * Sets:
+     * @arg myAmSetable to true
+     * @arg myAmSet to false
+     * @arg myHaveDefaultValue to hasDefault
+     * @param[in] hasDefault Whether a default values has been supplied
+     */
+    protected Option(boolean hasDefault) {
+	    myAmSetable = true;
+	    myAmSet = hasDefault;
+	    myHaveDefaultValue = hasDefault;
+    }
+		
 	
     /** @brief Returns whether this option's value may be read
      *
@@ -130,7 +136,5 @@ public abstract class Option {
 	    myHaveDefaultValue = false;
 	    myAmSet = true;
    }
-
-
 
 }

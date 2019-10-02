@@ -3,7 +3,19 @@ package de.dks.utils.options;
 import java.util.Iterator;
 import java.util.Vector;
 
+/**
+ * @class OptionsParser
+ * @brief Static helpers for parsing options from command line.
+ * @author Daniel Krajzewicz 
+ * @copyright (c) Daniel Krajzewicz 2004-2019
+ * @license Eclipse Public License v2.0 (EPL v2.0) 
+ */
 public class OptionsParser {
+    /** @brief Parses the given options into the given container
+	 * @param[in] into The options container to fill
+	 * @param[in] args The arguments given on the command line
+	 * @param[in] continueOnError Continues even if an error occures while parsing
+	 */
 	public static boolean parse(OptionsCont into, String[] args, boolean continueOnError) {
 	    boolean ok = true;
 	    for(int pos=0; pos<args.length;) {
@@ -29,6 +41,12 @@ public class OptionsParser {
 	}
 
 
+    /** @brief Parses a single option into the container
+	 * @param[in] into The options container to fill
+	 * @param[in] args The arguments given on the command line
+	 * @param[in] pos The current position within the arguments to parse from
+	 * @return The number of arguments to proceed
+	 */
 	private static int parse(OptionsCont into, String[] args, int pos) {
 	    // an option name indicator must have at least two characters
 	    if(args[pos].length()>=2) {
@@ -50,6 +68,12 @@ public class OptionsParser {
 	}
 
 
+    /** @brief Parses a single, abbreviated option into the container
+	 * @param[in] into The options container to fill
+	 * @param[in] args The arguments given on the command line
+	 * @param[in] pos The current position within the arguments to parse from
+	 * @return The number of arguments to proceed
+	 */
 	private static int parseAbbreviation(OptionsCont into, String[] args, int pos) {
 	    String options = args[pos].substring(1);
 	    int len = options.length();
@@ -107,7 +131,13 @@ public class OptionsParser {
 	}
 
 
-	private static int parseFull(OptionsCont into,  String[] args, int pos) {
+    /** @brief Parses a single, fully-named option into the container
+	 * @param[in] into The options container to fill
+	 * @param[in] args The arguments given on the command line
+	 * @param[in] pos The current position within the arguments to parse from
+	 * @return The number of arguments to proceed
+	 */
+	private static int parseFull(OptionsCont into, String[] args, int pos) {
 	    String option = args[pos].substring(2);
 	    String value = "";
 	    // check whether the value is given within the same token

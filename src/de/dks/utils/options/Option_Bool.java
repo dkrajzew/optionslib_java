@@ -1,21 +1,39 @@
 package de.dks.utils.options;
 
+/**
+ * @class Option_Bool
+ * @brief A derivation from Option for storing boolean values.
+ * @see Option
+ * @author Daniel Krajzewicz 
+ * @copyright (c) Daniel Krajzewicz 2004-2019
+ * @license Eclipse Public License v2.0 (EPL v2.0) 
+ */
 public class Option_Bool extends Option {
-	private boolean myValue;
+	/// @brief The value (false by default)
+	private boolean myValue = false;
 	
 	
+	/** @brief Constructor
+	 */
 	public Option_Bool() {
 		super(true);
-		myValue = false;
 	}
 	
-	
+
+	/** @brief Returns the type name, here: "bool"
+	 * @return The type name ("bool")
+	 */
 	@Override
 	public String getTypeName() {
 	    return "bool";
 	}
 	
 	
+	/** @brief Sets the given value
+	 * 
+	 * "t", "true", and "1" are interpreted as true, "f", "false", and "0" as false.
+	 * @param value The value to set
+	 */
 	@Override
 	public void set(String value) {
 		value = value.toLowerCase();
@@ -30,13 +48,18 @@ public class Option_Bool extends Option {
 	}
 
 	
+	/** @brief Returns the set value
+	 * @return The set value
+	 */
 	public boolean getValue() {
 	    return myValue;
 	}
 
 	
 	
-	
+	/** @brief Returns the string representation of the value
+	 * @return The value encoded to a string
+	 */
 	@Override
 	public String getValueAsString() {
 	    if(myValue) {

@@ -12,7 +12,30 @@ import de.dks.utils.options.Option_String;
 import de.dks.utils.options.OptionsCont;
 import de.dks.utils.options.OptionsIO;
 
+/**
+ * @class Example
+ * @brief An example application for using the optionslib_java option parsing library.
+ *  
+ * A very basic example for using the options. It's basically a "Hello World"-application
+ * that allows you to give a name and a greet on the command line. 
+ * The default for the name is "World" by default, but may be defined using the option 
+ * --name <NAME>, or -n <NAME> for short. The default for the greet is "Hello" by default, 
+ * but may be defined using the option --greet <GREET>, or -g <GREET> for short. 
+ * Additionally, you may optionally change the number of times "<GREET> <NAME>!" is 
+ * printed using the option --repeat (or -r for short).
+ * @author Daniel Krajzewicz 
+ * @copyright (c) Daniel Krajzewicz 2004-2019
+ * @license Eclipse Public License v2.0 (EPL v2.0) 
+ */
 public class Example {
+	/** @brief Builds the options container and sets the values from the given options
+	 * 
+	 * @param args The options given on the command line
+	 * @return The built options container
+	 * @throws ParserConfigurationException Thrown if the XML-parser could not be built
+	 * @throws SAXException Thrown on an XML-parsing error
+	 * @throws IOException Thrown if the configuration file could not be opened
+	 */
 	private static OptionsCont getOptions(String[] args) throws ParserConfigurationException, SAXException, IOException {
 		OptionsCont options = new OptionsCont();
 		options.setHelpHeadAndTail("Usage: example [option]+\n\nOptions:","");
@@ -32,6 +55,11 @@ public class Example {
 	}
 
 	
+	/** @brief The main method
+	 * 
+	 * Builds the options and parses them, prints the given greet string
+	 * @param args Command line options
+	 */
 	public static void main(String[] args) {
 	    try {
 	        // parse options
