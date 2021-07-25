@@ -35,7 +35,7 @@ public class OptionsIO {
     public static boolean parseAndLoad(OptionsCont into, String[] args, String configOptionName, boolean continueOnError, boolean acceptUnknown) throws ParserConfigurationException, SAXException, IOException {
         boolean ok = OptionsParser.parse(into, args, continueOnError);
         if(ok) into.remarkUnset();
-        if(configOptionName!=null && !"".equals(configOptionName)) {
+        if(configOptionName!=null && !"".equals(configOptionName) && into.isSet(configOptionName)) {
             if(ok) ok = load(into, configOptionName);
             if(ok) into.remarkUnset();
             if(ok) ok = OptionsParser.parse(into, args, continueOnError);
