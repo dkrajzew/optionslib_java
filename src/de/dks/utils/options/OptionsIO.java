@@ -75,14 +75,14 @@ public class OptionsIO {
     public static void writeXMLConfiguration(String configName, OptionsCont options) throws IOException {
     	Vector<String> optionNames = options.getSortedOptionNames();
     	FileWriter fileWriter = new FileWriter(configName);
-    	fileWriter.append("<configuration>");
+    	fileWriter.append("<configuration>\n");
     	for(Iterator<String> i=optionNames.iterator(); i.hasNext(); ) {
     		String oName = i.next();
     		if(options.isSet(oName)) {
-    			fileWriter.append("   <"+oName+">"+options.getValueAsString(oName)+"</"+oName+">");
+    			fileWriter.append("   <"+oName+">"+options.getValueAsString(oName)+"</"+oName+">\n");
     		}
     	}
-    	fileWriter.append("</configuration>");
+    	fileWriter.append("</configuration>\n");
     	fileWriter.close();
     }
 
@@ -96,12 +96,12 @@ public class OptionsIO {
     public static void writeXMLTemplate(String configName, OptionsCont options) throws IOException {
     	Vector<String> optionNames = options.getSortedOptionNames();
     	FileWriter fileWriter = new FileWriter(configName);
-    	fileWriter.append("<configuration>");
+    	fileWriter.append("<configuration>\n");
     	for(Iterator<String> i=optionNames.iterator(); i.hasNext(); ) {
     		String oName = i.next();
-   			fileWriter.append("   <"+oName+"></"+oName+">");
+   			fileWriter.append("   <"+oName+"></"+oName+">\n");
     	}
-    	fileWriter.append("</configuration>");
+    	fileWriter.append("</configuration>\n");
     	fileWriter.close();
     }
 
