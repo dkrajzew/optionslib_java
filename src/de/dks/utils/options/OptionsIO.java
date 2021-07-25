@@ -1,6 +1,9 @@
 package de.dks.utils.options;
 
+import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Iterator;
+import java.util.Vector;
 
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.parsers.SAXParser;
@@ -43,7 +46,7 @@ public class OptionsIO {
 
     /** @brief Loads options from a configuration file
      * @param[in] into The options container to fill
-       * @param[in] configOptionName The path to the configuration to load (XML)
+     * @param[in] configOptionName The path to the configuration to load (XML)
      * @throws ParserConfigurationException Thrown if the XML-parser could not be built
      * @throws SAXException Thrown on an XML-parsing error
      * @throws IOException Thrown if the configuration file could not be opened
@@ -60,6 +63,46 @@ public class OptionsIO {
         xmlReader.setContentHandler(new OptionsSAXHandler(into));
         xmlReader.parse(file);
         return true;
+    }
+    
+    
+    /** @brief Writes the set options as an XML configuration file
+     * 
+     * @param configName The name of the file to write the configuration to
+     * @param options The options container that includes the (set/parsed) options to write 
+     * @throws IOException If the file cannot be written
+     */
+    public static void writeXMLConfiguration(String configName, OptionsCont options) throws IOException {
+    	Vector<String> optionNames = options.getSortedOptionNames();
+    	FileWriter fileWriter = new FileWriter(configName);
+    	fileWriter.append("<configuration>");
+    	for(Iterator<String> i=optionNames.iterator(); i.hasNext(); ) {
+    		String oName = i.next();
+    		if(options.isSet(oName)) {
+    			fileWriter.append("   <"+oName+">"+options.getValueAsString(oName)+"</"+oName+">");
+    		}
+    	}
+    	fileWriter.append("</configuration>");
+    	fileWriter.close();
+    }
+
+    
+    /** @brief Writes the a template for a configuration file
+     * 
+     * @param configName The name of the file to write the template to
+     * @param options The options container to write a template for 
+     * @throws IOException If the file cannot be written
+     */
+    public static void writeXMLTemplate(String configName, OptionsCont options) throws IOException {
+    	Vector<String> optionNames = options.getSortedOptionNames();
+    	FileWriter fileWriter = new FileWriter(configName);
+    	fileWriter.append("<configuration>");
+    	for(Iterator<String> i=optionNames.iterator(); i.hasNext(); ) {
+    		String oName = i.next();
+   			fileWriter.append("   <"+oName+"></"+oName+">");
+    	}
+    	fileWriter.append("</configuration>");
+    	fileWriter.close();
     }
 
 }

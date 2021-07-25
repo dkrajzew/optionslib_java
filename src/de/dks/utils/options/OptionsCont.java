@@ -217,6 +217,19 @@ public class OptionsCont {
     }
 
 
+    /** @brief Returns the value of the named option as a string
+     * @param[in] name The name of the option to retrieve the value from
+     * @return The string representation of the option's value
+     */
+    public String getValueAsString(String name) {
+        Option o = getOptionSecure(name);
+        if(!o.isSet()) {
+            throw new RuntimeException("The option is not set!");
+        }
+        return o.getValueAsString();
+    }
+
+
     /** @brief Returns the information whether the option is set
      * @param[in] name The name of the option to check
      * @return Whether the option has a value set
@@ -246,6 +259,19 @@ public class OptionsCont {
      */
     public boolean contains(String name) {
         return myOptionsMap.containsKey(name);
+    }
+
+
+    /** @brief Returns the sorted (as inserted) option names
+     * @return The sorted list of option names
+     */
+    public Vector<String> getSortedOptionNames() {
+    	Vector<String> ret = new Vector<>();
+    	for(Iterator<Option> i=myOptions.iterator(); i.hasNext(); ) {
+    		Option o = i.next();
+    		ret.add(getSynonymes(o).lastElement());
+    	}
+        return ret;
     }
 
 
@@ -286,8 +312,7 @@ public class OptionsCont {
      */
     public void printSetOptions(PrintStream os) {
         Vector<String> known = new Vector<>();
-        for(Iterator<String> i=myOptionsMap.keySet().iterator(); i.hasNext(); ) { //std::map<std::string, Option*>::const_iterator i=oc.myOptionsMap.begin(); i!=oc.myOptionsMap.end(); i++) {
-            //Vector<string>::iterator j=find(known.begin(), known.end(), (*i).first);
+        for(Iterator<String> i=myOptionsMap.keySet().iterator(); i.hasNext(); ) { 
             String name = i.next();
             if(known.contains(name)) {
                 continue;
@@ -427,7 +452,7 @@ public class OptionsCont {
 
 
     /// @brief Remarks all options as unset
-    public void remarkUnset() {
+    protected void remarkUnset() {
         for(Iterator<Option> i=myOptions.iterator(); i.hasNext(); ) {
             Option o = i.next();
             o.remarkSetable();
