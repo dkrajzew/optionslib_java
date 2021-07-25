@@ -50,7 +50,7 @@ public abstract class Option {
 
 
    /** @brief Returns whether this option's value is the default value
-    * @return Whether the option has the defaulot value
+    * @return Whether the option has the default value
     */
     public boolean isDefault() {
         return myHaveDefaultValue;
