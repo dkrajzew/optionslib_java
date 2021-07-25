@@ -160,10 +160,10 @@ public class OptionsCont {
     public int getInteger(String name) {
         Option o = getOptionSecure(name);
         if(!(o instanceof Option_Integer)) { 
-            throw new RuntimeException("This is not an integer option!");
+            throw new RuntimeException("Option '" + name + "' is not an integer option!");
         }
         if(!o.isSet()) {
-            throw new RuntimeException("The option is not set!");
+            throw new RuntimeException("The option '" + name + "' is not set!");
         }
         return ((Option_Integer) o).getValue();
     }
@@ -176,10 +176,10 @@ public class OptionsCont {
     public double getDouble(String name) {
         Option o = getOptionSecure(name);
         if(!(o instanceof Option_Double)) { 
-            throw new RuntimeException("This is not a double option!");
+            throw new RuntimeException("Option '" + name + "' is not a double option!");
         }
         if(!o.isSet()) {
-            throw new RuntimeException("The option is not set!");
+            throw new RuntimeException("The option '" + name + "' is not set!");
         }
         return ((Option_Double) o).getValue();
     }
@@ -192,10 +192,10 @@ public class OptionsCont {
     public boolean getBool(String name) {
         Option o = getOptionSecure(name);
         if(!(o instanceof Option_Bool)) { 
-            throw new RuntimeException("This is not a bool option!");
+            throw new RuntimeException("Option '" + name + "' is not a bool option!");
         }
         if(!o.isSet()) {
-            throw new RuntimeException("The option is not set!");
+            throw new RuntimeException("The option '" + name + "' is not set!");
         }
         return ((Option_Bool) o).getValue();
     }
@@ -208,10 +208,10 @@ public class OptionsCont {
     public String getString(String name) {
         Option o = getOptionSecure(name);
         if(!(o instanceof Option_String)) { 
-            throw new RuntimeException("This is not a string option!");
+            throw new RuntimeException("Option '" + name + "' is not a string option!");
         }
         if(!o.isSet()) {
-            throw new RuntimeException("The option is not set!");
+            throw new RuntimeException("The option '" + name + "' is not set!");
         }
         return ((Option_String) o).getValue();
     }
@@ -224,7 +224,7 @@ public class OptionsCont {
     public String getValueAsString(String name) {
         Option o = getOptionSecure(name);
         if(!o.isSet()) {
-            throw new RuntimeException("The option is not set!");
+            throw new RuntimeException("The option '" + name + "' is not set!");
         }
         return o.getValueAsString();
     }
