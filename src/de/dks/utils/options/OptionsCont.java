@@ -379,7 +379,7 @@ public class OptionsCont {
                     os.print(desc.substring(beg));
                     beg = desc.length();
                 } else {
-                    int end = desc.indexOf(' ', beg+maxWidth-startCol);
+                    int end = desc.lastIndexOf(' ', beg+maxWidth-startCol);
                     os.println(desc.substring(beg, end));
                     beg = end;
                 }
