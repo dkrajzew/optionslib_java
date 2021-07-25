@@ -240,6 +240,15 @@ public class OptionsCont {
     }
 
 
+    /** @brief Returns whether the named option's value is its default value
+     * @return Whether the named option has the default value
+     */
+     public boolean isDefault(String name) {
+         Option o = getOption(name);
+         return o.isDefault();
+     }
+
+
     /** @brief Returns the information whether the option is a boolean option
      * @param[in] name The name of the option to check
      * @return Whether the option stores a bool
@@ -252,7 +261,7 @@ public class OptionsCont {
         return true;
     }
 
-
+     
     /** @brief Returns the information whether the named option is known
      * @param[in] name The name of the option
      * @return Whether the option is known

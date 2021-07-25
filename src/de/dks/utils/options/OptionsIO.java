@@ -78,7 +78,7 @@ public class OptionsIO {
     	fileWriter.append("<configuration>\n");
     	for(Iterator<String> i=optionNames.iterator(); i.hasNext(); ) {
     		String oName = i.next();
-    		if(options.isSet(oName)) {
+    		if(options.isSet(oName) && !options.isDefault(oName)) {
     			fileWriter.append("   <"+oName+">"+options.getValueAsString(oName)+"</"+oName+">\n");
     		}
     	}
