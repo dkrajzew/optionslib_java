@@ -1,6 +1,5 @@
 package de.dks.utils.options;
 
-import java.io.PrintStream;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -313,121 +312,6 @@ public class OptionsCont {
 
 
     
-    /// @brief Input / Output
-    /// @{
-
-    /** @brief Output operator
-     * @param[in] oc The output container to write
-     */
-    public void printSetOptions(PrintStream os) {
-        Vector<String> known = new Vector<>();
-        for(Iterator<String> i=myOptionsMap.keySet().iterator(); i.hasNext(); ) { 
-            String name = i.next();
-            if(known.contains(name)) {
-                continue;
-            }
-            Option o = myOptionsMap.get(name);
-            if(!o.isSet()) {
-                continue;
-            }
-            Vector<String> synonymes = getSynonymes(name);
-            Iterator<String> j=synonymes.iterator();
-            String first = j.next();
-            os.print(first);
-            known.add(first);
-            if(j.hasNext()) {
-                os.print(" (");
-                for(; j.hasNext(); ) {
-                    String name2 = j.next();
-                    known.add(name2);
-                    os.print(name2);
-                    if(j.hasNext()) {
-                        os.print(", ");
-                    }
-                }
-                os.print(")");
-            }
-            os.print(": " + o.getValueAsString());
-            if(o.isDefault()) {
-                os.print(" (default)");
-            }
-            os.println();
-        }
-    }
-    
-
-    /** @brief Prints the help screen
-    *
-    * First, the help header is printed. Then, the method iterates over the
-    *  known options. In the end, the help tail is printed.
-    * @param[in] os The stream to write to
-    * @param[in] maxWidth The maximum width of a line
-    * @param[in] optionIndent The indent to use before writing an option
-    * @param[in] divider The space between the option name and the description
-    * @param[in] sectionIndent The indent to use before writing a section name
-     */
-    public void printHelp(PrintStream os, int maxWidth, int optionIndent, int divider, int sectionIndent) {
-        // compute needed width
-        int optMaxWidth = 0;
-        for(Iterator<Option> i=myOptions.iterator(); i.hasNext(); ) {
-            Option option = i.next();
-            String optNames = getHelpFormattedSynonymes(option);
-            optMaxWidth = Math.max(optMaxWidth, optNames.length());
-        }
-        // build the indent
-        String optionIndentSting = "", sectionIndentSting = "";
-        for(int i=0; i<optionIndent; ++i) {
-            optionIndentSting += " ";
-        }
-        for(int i=0; i<sectionIndent; ++i) {
-            sectionIndentSting += " ";
-        }
-        // 
-        if(myHelpHead!=null) {
-            os.println(myHelpHead);
-        }
-        String lastSection = "";
-        for(Iterator<Option> i=myOptions.iterator(); i.hasNext(); ) {
-            Option option = i.next();
-            // check whether a new section starts
-            String optSection = myOption2Section.get(option);
-            if(optSection!=null&&!"".contentEquals(optSection)&&lastSection!=optSection) {
-                lastSection = optSection;
-                os.println(sectionIndentSting+lastSection);
-            }
-            // write the option
-            String optNames = getHelpFormattedSynonymes(option);
-            // write the divider
-            os.print(optionIndentSting+optNames);
-            int owidth = optNames.length();
-            // write the description
-            int beg = 0;
-            String desc = option.getDescription();
-            int offset = divider+optMaxWidth-owidth;
-            int startCol = divider+optMaxWidth+optionIndent;
-            while(desc!=null&&beg<desc.length()) {
-                for(int j=0; j<offset; ++j) {
-                    os.print(" ");
-                }
-                if(maxWidth-startCol>=desc.length()-beg) {
-                    os.print(desc.substring(beg));
-                    beg = desc.length();
-                } else {
-                    int end = desc.lastIndexOf(' ', beg+maxWidth-startCol);
-                    os.println(desc.substring(beg, end));
-                    beg = end;
-                }
-                startCol = divider+optMaxWidth+optionIndent+1; // could "running description indent"
-                offset = startCol;
-            }
-            os.println();
-        }
-        if(myHelpTail!=null) {
-            os.println(myHelpTail);
-        }
-    }
-    /// @}
-
     
     
     /// @brief (Re-)Setting values
@@ -471,6 +355,47 @@ public class OptionsCont {
 
     
     
+    /** @brief Returns the name of the section the option belongs to
+     * 
+     * @param optionName The name of the option to return the section name for
+     * @return The name of the section the named option belongs to
+     */
+    String getSection(String optionName) {
+    	Option option = getOption(optionName);
+    	return myOption2Section.get(option); 
+    }
+    
+    
+    /** @brief Returns the description of the named option
+     * 
+     * @param optionName The name of the option to return the description for
+     * @return The description of the option
+     */
+    String getDescription(String optionName) {
+    	Option option = getOption(optionName);
+    	return option.getDescription(); 
+    }
+    
+    
+    /** @brief Returns the help head
+     * 
+     * @return The help head
+     */
+    String getHelpHead() {
+    	return myHelpHead; 
+    }
+    
+    
+    /** @brief Returns the help tail
+     * 
+     * @return The help tail
+     */
+    String getHelpTail() {
+    	return myHelpTail; 
+    }
+    
+    
+    
     /// @brief Private helper options
     /// @{
 
@@ -509,31 +434,5 @@ public class OptionsCont {
         return ret;
     }
 
-
-    /** @brief Returns the synomymes of an option as a help-formatted string 
-    *
-    * The synomymes are sorted by length.
-    * @param[in] option The option to get the synonymes help string for
-    * @return The options as a help-formatted string
-    */
-    private String getHelpFormattedSynonymes(Option option) {
-        Vector<String> synonymes = getSynonymes(option);
-        Collections.sort(synonymes, new SortByLengthComparator()) ;
-        StringBuffer sb = new StringBuffer();
-        for(Iterator<String> i=synonymes.iterator(); i.hasNext(); ) {
-            String name = i.next();
-            // consider the - / --
-            if(name.length()==1) {
-                sb.append('-');
-            } else {
-                sb.append("--");
-            }
-            sb.append(name);
-            if(i.hasNext()) {
-                sb.append(", ");
-            }
-        }
-        return sb.toString();
-    }
-
+    
 }

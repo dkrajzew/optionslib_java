@@ -24,7 +24,7 @@ import de.dks.utils.options.OptionsIO;
  * Additionally, you may optionally change the number of times "<GREET> <NAME>!" is 
  * printed using the option --repeat (or -r for short).
  * @author Daniel Krajzewicz 
- * @copyright (c) Daniel Krajzewicz 2004-2019
+ * @copyright (c) Daniel Krajzewicz 2004-2021
  * @license Eclipse Public License v2.0 (EPL v2.0) 
  */
 public class Example {
@@ -38,7 +38,7 @@ public class Example {
      */
     private static OptionsCont getOptions(String[] args) throws ParserConfigurationException, SAXException, IOException {
         OptionsCont options = new OptionsCont();
-        options.setHelpHeadAndTail("Usage: example [option]+\n\nOptions:","");
+        options.setHelpHeadAndTail("Usage: example [option]+\n\nOptions:", "");
         // function
         options.add("name", 'n', new Option_String("World"));
         options.setDescription("name", "Defines how to call the user.");
@@ -67,7 +67,7 @@ public class Example {
             // check for additional (meta) options
             if(options.getBool("help")) {
                 // print the help screen
-                options.printHelp(System.out, 80, 2, 2, 1);
+                OptionsIO.printHelp(System.out, options, 80, 2, 2, 1);
             } else {
                 // do something
                 String name = options.getString("name");

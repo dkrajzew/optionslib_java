@@ -2,6 +2,8 @@ package de.dks.utils.options;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.PrintStream;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.Vector;
 
@@ -105,4 +107,153 @@ public class OptionsIO {
     	fileWriter.close();
     }
 
+    
+    /** @brief Output operator
+     * @param[in] os The output container to write
+     * @param[in] options The options to print
+     */
+    public static void printSetOptions(PrintStream os, OptionsCont options, boolean includeSynonymes, boolean shortestFirst, boolean skipDefault) {
+    	Vector<String> optionNames = options.getSortedOptionNames();
+        for(Iterator<String> i=optionNames.iterator(); i.hasNext(); ) { 
+            String name = i.next();
+            if(!options.isSet(name)) {
+                continue;
+            }
+            if(skipDefault && options.isDefault(name)) {
+                continue;
+            }
+            Vector<String> synonymes = options.getSynonymes(name);
+            if(shortestFirst) {
+            	Collections.reverse(synonymes);
+            }
+            Iterator<String> j=synonymes.iterator();
+            String first = j.next();
+            os.print(first);
+            if(includeSynonymes) {
+                if(j.hasNext()) {
+                    os.print(" (");
+                    for(; j.hasNext(); ) {
+                        String name2 = j.next();
+                        os.print(name2);
+                        if(j.hasNext()) {
+                            os.print(", ");
+                        }
+                    }
+                    os.print(")");
+                }
+            }
+            os.print(": " + options.getValueAsString(name));
+            if(options.isDefault(name)) {
+                os.print(" (default)");
+            }
+            os.println();
+        }
+    }
+    
+
+    /** @brief Prints the help screen
+     *
+     *  First, the help header is printed. Then, the method iterates over the
+     *  known options. In the end, the help tail is printed.
+     * @param[in] os The stream to write to
+     * @param[in] options The options to print
+     * @param[in] maxWidth The maximum width of a line
+     * @param[in] optionIndent The indent to use before writing an option
+     * @param[in] divider The space between the option name and the description
+     * @param[in] sectionIndent The indent to use before writing a section name
+     */
+    public static void printHelp(PrintStream os, OptionsCont options, int maxWidth, int optionIndent, int divider, int sectionIndent) {
+    	Vector<String> optionNames = options.getSortedOptionNames();
+    	String helpHead = options.getHelpHead();
+    	String helpTail = options.getHelpTail();
+        // compute needed width
+        int optMaxWidth = 0;
+        for(Iterator<String> i=optionNames.iterator(); i.hasNext(); ) {
+            String name = i.next();
+            String optNames = getHelpFormattedSynonymes(options, name);
+            optMaxWidth = Math.max(optMaxWidth, optNames.length());
+        }
+        // build the indent
+        String optionIndentSting = "", sectionIndentSting = "";
+        for(int i=0; i<optionIndent; ++i) {
+            optionIndentSting += " ";
+        }
+        for(int i=0; i<sectionIndent; ++i) {
+            sectionIndentSting += " ";
+        }
+        // 
+        if(helpHead!=null) {
+            os.println(helpHead);
+        }
+        String lastSection = "";
+        for(Iterator<String> i=optionNames.iterator(); i.hasNext(); ) {
+        	String name = i.next();
+            // check whether a new section starts
+            String optSection = options.getSection(name);
+            if(optSection!=null&&!"".contentEquals(optSection)&&lastSection!=optSection) {
+                lastSection = optSection;
+                os.println(sectionIndentSting+lastSection);
+            }
+            // write the option
+            String optNames = getHelpFormattedSynonymes(options, name);
+            // write the divider
+            os.print(optionIndentSting+optNames);
+            int owidth = optNames.length();
+            // write the description
+            int beg = 0;
+            String desc = options.getDescription(name);
+            int offset = divider+optMaxWidth-owidth;
+            int startCol = divider+optMaxWidth+optionIndent;
+            while(desc!=null&&beg<desc.length()) {
+                for(int j=0; j<offset; ++j) {
+                    os.print(" ");
+                }
+                if(maxWidth-startCol>=desc.length()-beg) {
+                    os.print(desc.substring(beg));
+                    beg = desc.length();
+                } else {
+                    int end = desc.lastIndexOf(' ', beg+maxWidth-startCol);
+                    os.println(desc.substring(beg, end));
+                    beg = end;
+                }
+                startCol = divider+optMaxWidth+optionIndent+1; // could "running description indent"
+                offset = startCol;
+            }
+            os.println();
+        }
+        if(helpTail!=null) {
+            os.println(helpTail);
+        }
+    }
+
+    
+
+
+    /** @brief Returns the synomymes of an option as a help-formatted string 
+     *
+     * The synomymes are sorted by length.
+     * @param[in] options The options container to get information from
+     * @param[in] optionName The name of option to get the synonymes help string for
+     * @return The options as a help-formatted string
+     */
+    private static String getHelpFormattedSynonymes(OptionsCont options, String optionName) {
+        Vector<String> synonymes = options.getSynonymes(optionName);
+        Collections.sort(synonymes, options.new SortByLengthComparator());
+        StringBuffer sb = new StringBuffer();
+        for(Iterator<String> i=synonymes.iterator(); i.hasNext(); ) {
+            String name2 = i.next();
+            // consider the - / --
+            if(name2.length()==1) {
+                sb.append('-');
+            } else {
+                sb.append("--");
+            }
+            sb.append(name2);
+            if(i.hasNext()) {
+                sb.append(", ");
+            }
+        }
+        return sb.toString();
+    }
+    
 }

@@ -18,7 +18,7 @@ import de.dks.utils.options.OptionsIO;
 
 /**
  * @class Tester
- * @brief Used for tesing the library in conjunction with TextTest.
+ * @brief Used for testing the library in conjunction with TextTest.
  *  
  * The tester application is just for internal testing purposes. 
  * It reads a definitions file called "options.txt" which includes 
@@ -26,7 +26,7 @@ import de.dks.utils.options.OptionsIO;
  * Then the application performs the things defined by the 
  * http://texttest.sourceforge.net/ test system.
  * @author Daniel Krajzewicz 
- * @copyright (c) Daniel Krajzewicz 2004-2019
+ * @copyright (c) Daniel Krajzewicz 2004-2021
  * @license Eclipse Public License v2.0 (EPL v2.0) 
  */
 public class Tester {
@@ -163,9 +163,9 @@ public class Tester {
             OptionsCont options = loadDefinition();
             // parse options
             if(OptionsIO.parseAndLoad(options, args, configOptionName, false, false)) {
-                options.printHelp(System.out, 80, 2, 2, 1);
+            	OptionsIO.printHelp(System.out, options, 80, 2, 2, 1);
                 System.out.println("-------------------------------------------------------------------------------");
-                options.printSetOptions(System.out);
+                OptionsIO.printSetOptions(System.out, options, true, false, false);
                 System.out.println("-------------------------------------------------------------------------------");
             }
         } catch(Exception e) {
