@@ -1,2 +1,2 @@
-java.lang.RuntimeException: The option 'test' needs an double as parameter.
+java.lang.RuntimeException: The parameter for option 'test' must be of double type.
 Quitting (on error).

@@ -229,6 +229,16 @@ public class OptionsCont {
     }
 
 
+    /** @brief Returns the name of the option's type
+     * @param[in] name The name of the option get the type of
+     * @return The type of the option
+     */
+    public String getTypeName(String name) {
+        Option o = getOption(name);
+        return o.getTypeName();
+    }
+
+
     /** @brief Returns the information whether the option is set
      * @param[in] name The name of the option to check
      * @return Whether the option has a value set
