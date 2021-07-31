@@ -8,9 +8,9 @@
   --version     Prints the version.
   -?, --help    Prints this help screen.
 -------------------------------------------------------------------------------
-? (help): false (default)
-c (config): config.xml
-g (greet): Hei
 n (name): Du
+g (greet): Hei
+c (config): config.xml
 version: false (default)
+? (help): false (default)
 -------------------------------------------------------------------------------
