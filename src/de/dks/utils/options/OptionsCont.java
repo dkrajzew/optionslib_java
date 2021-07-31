@@ -10,7 +10,7 @@ import java.util.Vector;
  * @class OptionsCont
  * @brief An options storing container.
  * @author Daniel Krajzewicz 
- * @copyright (c) Daniel Krajzewicz 2004-2019
+ * @copyright (c) Daniel Krajzewicz 2004-2021
  * @license Eclipse Public License v2.0 (EPL v2.0) 
  */
 public class OptionsCont {

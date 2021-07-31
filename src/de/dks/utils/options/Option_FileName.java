@@ -6,7 +6,7 @@ package de.dks.utils.options;
  * @see Option
  * @see Option_String
  * @author Daniel Krajzewicz 
- * @copyright (c) Daniel Krajzewicz 2004-2019
+ * @copyright (c) Daniel Krajzewicz 2004-2021
  * @license Eclipse Public License v2.0 (EPL v2.0) 
  */
 public class Option_FileName extends Option_String {

@@ -18,16 +18,16 @@ import org.xml.sax.XMLReader;
  * @class OptionsIO
  * @brief Static helper methods for parsing and loading of options.
  * @author Daniel Krajzewicz 
- * @copyright (c) Daniel Krajzewicz 2004-2019
+ * @copyright (c) Daniel Krajzewicz 2004-2021
  * @license Eclipse Public License v2.0 (EPL v2.0) 
  */
 public class OptionsIO {
     /** @brief Parses options from the command line and optionally loads options from a configuration file
      * @param[in] into The options container to fill
      * @param[in] args The arguments given on the command line
-       * @param[in] configOptionName The path to the configuration to load (XML)
+     * @param[in] configOptionName The path to the configuration to load (XML)
      * @param[in] continueOnError Continues even if an error occures while parsing
-       * @param[in] acceptUnknown Unknown options do not throw an exception
+     * @param[in] acceptUnknown Unknown options do not throw an exception
      * @todo continueOnError is not used
      * @todo acceptUnknown is not used
      * @throws ParserConfigurationException Thrown if the XML-parser could not be built
@@ -153,7 +153,7 @@ public class OptionsIO {
 
     /** @brief Prints the help screen
      *
-     *  First, the help header is printed. Then, the method iterates over the
+     * First, the help header is printed. Then, the method iterates over the
      *  known options. In the end, the help tail is printed.
      * @param[in] os The stream to write to
      * @param[in] options The options to print

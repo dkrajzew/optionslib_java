@@ -4,7 +4,7 @@ package de.dks.utils.options;
  * @class Option
  * @brief A base class for options.
  * @author Daniel Krajzewicz 
- * @copyright (c) Daniel Krajzewicz 2004-2019
+ * @copyright (c) Daniel Krajzewicz 2004-2021
  * @license Eclipse Public License v2.0 (EPL v2.0) 
  */
 public abstract class Option {

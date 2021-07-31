@@ -5,7 +5,7 @@ package de.dks.utils.options;
  * @brief A derivation from Option for storing double values.
  * @see Option
  * @author Daniel Krajzewicz 
- * @copyright (c) Daniel Krajzewicz 2004-2019
+ * @copyright (c) Daniel Krajzewicz 2004-2021
  * @license Eclipse Public License v2.0 (EPL v2.0) 
  */
 public class Option_Double extends Option {
