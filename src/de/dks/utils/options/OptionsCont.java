@@ -71,7 +71,7 @@ public class OptionsCont {
         if(myOptionsMap.containsKey(name)) {
             throw new RuntimeException("An option with the name '" + name + "' already exists.");
         }
-        // check whether a synonyme already exists, if not, add the option to option's array
+        // check whether a synonym already exists, if not, add the option to option's array
         if(!myOptions.contains(option)) {
             myOptions.add(option);
             myOption2Section.put(option, myCurrentSection);
@@ -92,11 +92,11 @@ public class OptionsCont {
     }
 
 
-    /** @brief Registers a known option under the other synonyme
+    /** @brief Registers a known option under the other synonym
      * @param[in] name1 The name the option was already known under
-     * @param[in] name2 The synonyme to register
+     * @param[in] name2 The synonym to register
      */
-    public void addSynonyme(String name1, String name2) {
+    public void addSynonym(String name1, String name2) {
         Option o1 = getOptionSecure(name1);
         Option o2 = getOptionSecure(name2);
         if(o1==null&&o2==null) {
@@ -277,19 +277,19 @@ public class OptionsCont {
     	Vector<String> ret = new Vector<>();
     	for(Iterator<Option> i=myOptions.iterator(); i.hasNext(); ) {
     		Option o = i.next();
-    		ret.add(getSynonymes(o).lastElement());
+    		ret.add(getSynonyms(o).lastElement());
     	}
         return ret;
     }
 
 
-    /** @brief Returns the list of synonymes to the given option name
+    /** @brief Returns the list of synonyms to the given option name
      * @param[in] name The name of the option
      * @return List of this option's names
      */
-    public Vector<String> getSynonymes(String name) {
+    public Vector<String> getSynonyms(String name) {
         Option option = getOption(name);
-        return getSynonymes(option);
+        return getSynonyms(option);
     }
 
 
@@ -297,7 +297,7 @@ public class OptionsCont {
      * @param[in] option The option to retrieve her names
      * @return List of this option's names
      */
-    public Vector<String> getSynonymes(Option option) {
+    public Vector<String> getSynonyms(Option option) {
         Vector<String> ret = new Vector<>();
         for(Iterator<String> i=myOptionsMap.keySet().iterator(); i.hasNext(); ) {
             String name = i.next();

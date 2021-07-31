@@ -60,7 +60,7 @@ public class Tester {
             } else {
                 // ok, it's an option
                 // ... parse the line
-                Vector<String> synonymes = new Vector<>();
+                Vector<String> synonyms = new Vector<>();
                 char abbr = '!';
                 String type=null, description=null, defaultValue=null;
                 StringTokenizer st = new StringTokenizer(line, ";");
@@ -77,21 +77,21 @@ public class Tester {
                     }  else if(s.charAt(0)=='+') {
                         defaultValue = s.substring(1);
                     } else {
-                        synonymes.add(s);
+                        synonyms.add(s);
                     }
                 }
                 // ... is it the tail/head help stuff?
                 if("HELPHEADTAIL".equals(type)) {
-                    options.setHelpHeadAndTail(synonymes.elementAt(0), synonymes.elementAt(1));
+                    options.setHelpHeadAndTail(synonyms.elementAt(0), synonyms.elementAt(1));
                     continue;
                 }
                 if("CONFIG".equals(type)) {
-                    configOptionName = synonymes.elementAt(0);
+                    configOptionName = synonyms.elementAt(0);
                     continue;
                 }
                 // ... is it a named section begin?
                 if("SECTION".equals(type)) {
-                    options.beginSection(synonymes.elementAt(0));
+                    options.beginSection(synonyms.elementAt(0));
                     continue;
                 }
                 // ... build the option, first
@@ -130,16 +130,16 @@ public class Tester {
                     }
                 }
                 // ... add it to the container
-                String firstName = synonymes.elementAt(0);
-                synonymes.remove(0);
+                String firstName = synonyms.elementAt(0);
+                synonyms.remove(0);
                 if(abbr!='!') {
                     options.add(firstName, abbr, option);
                 } else {
                     options.add(firstName, option);
                 }
-                while(synonymes.size()!=0) {
-                    options.addSynonyme(firstName, synonymes.elementAt(0));
-                    synonymes.remove(0);
+                while(synonyms.size()!=0) {
+                    options.addSynonym(firstName, synonyms.elementAt(0));
+                    synonyms.remove(0);
                 }
                 // ... add description if given
                 if(description!=null) {

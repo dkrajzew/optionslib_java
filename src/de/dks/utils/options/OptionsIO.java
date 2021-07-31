@@ -112,7 +112,7 @@ public class OptionsIO {
      * @param[in] os The output container to write
      * @param[in] options The options to print
      */
-    public static void printSetOptions(PrintStream os, OptionsCont options, boolean includeSynonymes, boolean shortestFirst, boolean skipDefault) {
+    public static void printSetOptions(PrintStream os, OptionsCont options, boolean includeSynonyms, boolean shortestFirst, boolean skipDefault) {
     	Vector<String> optionNames = options.getSortedOptionNames();
         for(Iterator<String> i=optionNames.iterator(); i.hasNext(); ) { 
             String name = i.next();
@@ -122,14 +122,14 @@ public class OptionsIO {
             if(skipDefault && options.isDefault(name)) {
                 continue;
             }
-            Vector<String> synonymes = options.getSynonymes(name);
+            Vector<String> synonyms = options.getSynonyms(name);
             if(shortestFirst) {
-            	Collections.reverse(synonymes);
+            	Collections.reverse(synonyms);
             }
-            Iterator<String> j=synonymes.iterator();
+            Iterator<String> j=synonyms.iterator();
             String first = j.next();
             os.print(first);
-            if(includeSynonymes) {
+            if(includeSynonyms) {
                 if(j.hasNext()) {
                     os.print(" (");
                     for(; j.hasNext(); ) {
@@ -170,7 +170,7 @@ public class OptionsIO {
         int optMaxWidth = 0;
         for(Iterator<String> i=optionNames.iterator(); i.hasNext(); ) {
             String name = i.next();
-            String optNames = getHelpFormattedSynonymes(options, name);
+            String optNames = getHelpFormattedSynonyms(options, name);
             optMaxWidth = Math.max(optMaxWidth, optNames.length());
         }
         // build the indent
@@ -195,7 +195,7 @@ public class OptionsIO {
                 os.println(sectionIndentSting+lastSection);
             }
             // write the option
-            String optNames = getHelpFormattedSynonymes(options, name);
+            String optNames = getHelpFormattedSynonyms(options, name);
             // write the divider
             os.print(optionIndentSting+optNames);
             int owidth = optNames.length();
@@ -233,14 +233,14 @@ public class OptionsIO {
      *
      * The synomymes are sorted by length.
      * @param[in] options The options container to get information from
-     * @param[in] optionName The name of option to get the synonymes help string for
+     * @param[in] optionName The name of option to get the synonyms help string for
      * @return The options as a help-formatted string
      */
-    private static String getHelpFormattedSynonymes(OptionsCont options, String optionName) {
-        Vector<String> synonymes = options.getSynonymes(optionName);
-        Collections.sort(synonymes, options.new SortByLengthComparator());
+    private static String getHelpFormattedSynonyms(OptionsCont options, String optionName) {
+        Vector<String> synonyms = options.getSynonyms(optionName);
+        Collections.sort(synonyms, options.new SortByLengthComparator());
         StringBuffer sb = new StringBuffer();
-        for(Iterator<String> i=synonymes.iterator(); i.hasNext(); ) {
+        for(Iterator<String> i=synonyms.iterator(); i.hasNext(); ) {
             String name2 = i.next();
             // consider the - / --
             if(name2.length()==1) {
