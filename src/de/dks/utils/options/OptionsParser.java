@@ -126,7 +126,11 @@ public class OptionsParser {
             tokens = 2;
         }
         // ok
-        into.set(usingParameter.firstElement(), param);
+        try {
+        	into.set(usingParameter.firstElement(), param);
+        } catch(NumberFormatException e) {
+            throw new RuntimeException("The parameter for option '" + usingParameter.firstElement() + "' must be of " + into.getTypeName(usingParameter.firstElement()) + " type.");
+        }
         return tokens;
     }
 
@@ -156,9 +160,13 @@ public class OptionsParser {
             return 1;
         }
         // otherwise (parameter needed)
-        if(value!="") {
+        if(!value.equals("")) {
             // ok, value was given within the same token
-            into.set(option, value);
+            try {
+            	into.set(option, value);
+            } catch(NumberFormatException e) {
+                throw new RuntimeException("The parameter for option '" + option + "' must be of " + into.getTypeName(option) + " type.");
+            }
             return 1;
         }
         if(pos+1>=args.length) {
@@ -166,7 +174,11 @@ public class OptionsParser {
             throw new RuntimeException("Parameter '" + option + "' needs a value.");
         }
         // ok, use the next one
-        into.set(option, args[pos+1]);
+        try {
+        	into.set(option, args[pos+1]);
+        } catch(NumberFormatException e) {
+            throw new RuntimeException("The parameter for option '" + option + "' must be of " + into.getTypeName(option) + " type.");
+        }
         return 2;
     }
 
