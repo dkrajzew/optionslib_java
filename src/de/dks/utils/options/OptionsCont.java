@@ -157,7 +157,7 @@ public class OptionsCont {
      * @return The named option's value
      */
     public int getInteger(String name) {
-        Option o = getOptionSecure(name);
+        Option o = getOption(name);
         if(!(o instanceof Option_Integer)) { 
             throw new RuntimeException("Option '" + name + "' is not an integer option!");
         }
@@ -173,7 +173,7 @@ public class OptionsCont {
      * @return The named option's value
      */
     public double getDouble(String name) {
-        Option o = getOptionSecure(name);
+        Option o = getOption(name);
         if(!(o instanceof Option_Double)) { 
             throw new RuntimeException("Option '" + name + "' is not a double option!");
         }
@@ -189,7 +189,7 @@ public class OptionsCont {
      * @return The named option's value
      */
     public boolean getBool(String name) {
-        Option o = getOptionSecure(name);
+        Option o = getOption(name);
         if(!(o instanceof Option_Bool)) { 
             throw new RuntimeException("Option '" + name + "' is not a bool option!");
         }
@@ -205,7 +205,7 @@ public class OptionsCont {
      * @return The named option's value
      */
     public String getString(String name) {
-        Option o = getOptionSecure(name);
+        Option o = getOption(name);
         if(!(o instanceof Option_String)) { 
             throw new RuntimeException("Option '" + name + "' is not a string option!");
         }
@@ -221,7 +221,7 @@ public class OptionsCont {
      * @return The string representation of the option's value
      */
     public String getValueAsString(String name) {
-        Option o = getOptionSecure(name);
+        Option o = getOption(name);
         if(!o.isSet()) {
             throw new RuntimeException("The option '" + name + "' is not set!");
         }
