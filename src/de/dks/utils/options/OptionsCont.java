@@ -370,7 +370,7 @@ public class OptionsCont {
      * @param optionName The name of the option to return the section name for
      * @return The name of the section the named option belongs to
      */
-    String getSection(String optionName) {
+    public String getSection(String optionName) {
     	Option option = getOption(optionName);
     	return myOption2Section.get(option); 
     }
@@ -381,7 +381,7 @@ public class OptionsCont {
      * @param optionName The name of the option to return the description for
      * @return The description of the option
      */
-    String getDescription(String optionName) {
+    public String getDescription(String optionName) {
     	Option option = getOption(optionName);
     	return option.getDescription(); 
     }
@@ -391,7 +391,7 @@ public class OptionsCont {
      * 
      * @return The help head
      */
-    String getHelpHead() {
+    public String getHelpHead() {
     	return myHelpHead; 
     }
     
@@ -400,7 +400,7 @@ public class OptionsCont {
      * 
      * @return The help tail
      */
-    String getHelpTail() {
+    public String getHelpTail() {
     	return myHelpTail; 
     }
     
