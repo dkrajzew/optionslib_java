@@ -23,10 +23,13 @@ public class OptionsCont {
     private Vector<Option> myOptions = new Vector<>();
     
     /// @brief THe last section added
-    private String myCurrentSection;
+    private String myCurrentSection = null;
     
     /// @brief The head and the tail of the help pages
-    private String myHelpHead, myHelpTail;
+    private String myHelpHead = null, myHelpTail = null;
+    
+    /// @brief The name of the option that defines the parent configuration
+    private String myParentConfigurationName = null;
     
     
 
@@ -115,8 +118,13 @@ public class OptionsCont {
             add(name1, o2);
         }
     }
+    /// @{
 
 
+
+    /// @brief Filling Help Information
+    /// @{
+    
     /** @brief Sets the description for an already added option
      *
      * The description is what appears in the help menu
@@ -152,7 +160,7 @@ public class OptionsCont {
 
 
 
-    /// @brief Retrieving Values
+    /// @brief Retrieving Option Values
     /// @{
 
     /** @brief Returns the integer value of the named option
@@ -262,6 +270,16 @@ public class OptionsCont {
      }
 
 
+     /** @brief Returns whether the named option can be set
+      * @param[in] name The name of the option to check whether it can be set
+      * @return Whether the named option can be set
+      */
+     public boolean canBeSet(String name) {
+         Option o = getOption(name);
+         return o.canBeSet();
+     }
+
+
     /** @brief Returns the information whether the option is a boolean option
      * @param[in] name The name of the option to check
      * @return Whether the option stores a bool
@@ -326,8 +344,6 @@ public class OptionsCont {
 
 
     
-    
-    
     /// @brief (Re-)Setting values
     /// @{
 
@@ -365,10 +381,22 @@ public class OptionsCont {
             o.remarkSetable();
         }
     }
+
+
+    /** @brief Remarks the named option as unset
+     * @param[in] name The name of the option to unset
+     */
+    protected void remarkUnset(String name) {
+    	Option option = getOption(name);
+    	option.remarkSetable();
+    }
     /// @}
 
     
     
+    /// @brief Retrieving Help Information
+    /// @{
+
     /** @brief Returns the name of the section the option belongs to
      * 
      * @param optionName The name of the option to return the section name for
@@ -407,6 +435,29 @@ public class OptionsCont {
     public String getHelpTail() {
     	return myHelpTail; 
     }
+    /// @}
+
+    
+    
+    /// @brief Configuration Hierarchy Name Handling
+    /// @{
+    
+    /** @brief Sets the name of the configuration parent option
+     * @param parentName The name to find the parent configuration at
+     */
+    public void setParentConfigurationName(String parentName) {
+    	myParentConfigurationName = parentName;
+    }
+    
+    
+    /** @brief Returns the name of the configuration parent option
+     * @return The name to find the parent configuration at
+     */
+    public String getParentConfigurationName() {
+    	return myParentConfigurationName;
+    }
+    
+    
     
     
     

@@ -34,7 +34,8 @@ public class OptionsIO {
     public static boolean parseAndLoad(OptionsCont into, String[] args, OptionsTypedFileIO fileIO, String configOptionName, boolean continueOnError, boolean acceptUnknown) throws ParserConfigurationException, SAXException, IOException {
         boolean ok = OptionsParser.parse(into, args, continueOnError);
         if(ok && fileIO!=null && configOptionName!=null && !"".equals(configOptionName) && into.isSet(configOptionName)) {
-            ok = fileIO.loadConfiguration(into, configOptionName);
+        	String configFileName = into.getString(configOptionName);
+            ok = fileIO.loadConfiguration(into, configFileName);
         }
         return ok;
     }

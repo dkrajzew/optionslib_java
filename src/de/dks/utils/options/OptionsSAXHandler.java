@@ -49,7 +49,7 @@ public class OptionsSAXHandler extends DefaultHandler {
     public void characters(char[] ch, int start, int length) throws SAXException {
         // https://howtodoinjava.com/xml/sax-parser-read-xml-example/, 15.09.2019
         String value = new String(ch, start, length).trim();
-        if(value.length()>0 && myOptions.isDefault(myCurrentOptionName)) {
+        if(value.length()>0 && myOptions.canBeSet(myCurrentOptionName)) {
             myOptions.set(myCurrentOptionName, value);
         }
     }

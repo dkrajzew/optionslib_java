@@ -121,7 +121,7 @@ public abstract class Option {
    public abstract String getValueAsString();
    
 
-   /** @brief checks and marks further usage of this option on setting it
+   /** @brief Checks and marks further usage of this option on setting it
     *
     * Checks whether this option may be set using myAmSetable.
     * If not, throws an InvalidArgument-exception.
@@ -136,4 +136,12 @@ public abstract class Option {
         myAmSet = true;
    }
 
+   
+   /** @brief Returns whether the option can be set
+    * @return Whether the option can be set
+    */
+   protected boolean canBeSet() {
+	   return myAmSetable;
+   }
+   
 }

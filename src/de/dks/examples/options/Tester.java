@@ -34,7 +34,7 @@ import de.dks.utils.options.OptionsTypedFileIO;
  */
 public class Tester {
     /// @brief The (optional) configuration file name
-    private static String configOptionName = "";
+    private static String configOptionName = null;
     
     /// @brief The (optional) configuration reader
     private static OptionsTypedFileIO fileIO = null;
@@ -176,7 +176,11 @@ public class Tester {
             // load the definition
             OptionsCont options = loadDefinition();
             // parse options
-            if(OptionsIO.parseAndLoad(options, args, fileIO, configOptionName, false, false)) {
+            String configFileName = "";
+            if(configOptionName!=null) {
+            	configFileName = options.getString(configOptionName);
+            }
+            if(OptionsIO.parseAndLoad(options, args, fileIO, configFileName, false, false)) {
             	OptionsIO.printHelp(System.out, options, 80, 2, 2, 1, 1);
                 System.out.println("-------------------------------------------------------------------------------");
                 OptionsIO.printSetOptions(System.out, options, true, false, false);

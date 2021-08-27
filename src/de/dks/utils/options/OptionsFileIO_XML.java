@@ -18,17 +18,16 @@ import org.xml.sax.XMLReader;
  * @author Daniel Krajzewicz (daniel@krajzewicz.de)
  * @copyright Eclipse Public License v2.0 (EPL v2.0), (c) Daniel Krajzewicz 2021-
  */
-public class OptionsFileIO_XML implements OptionsTypedFileIO {
+public class OptionsFileIO_XML extends OptionsTypedFileIO {
 
 	/** @brief Loads parameters from a configuration file
 	 * @param into The options container to fill
-	 * @param configOptionName The name of the option to retrieve the file name from
+	 * @param configFileName The name of the option to retrieve the file name from
 	 * @return Whether options could be loaded
 	 * @throws IOException If the file cannot be read 
 	 */
 	@Override
-	public boolean loadConfiguration(OptionsCont into, String configOptionName) throws IOException {
-        String file = into.getString(configOptionName);
+	protected boolean _loadConfiguration(OptionsCont into, String configFileName) throws IOException {
         SAXParserFactory spf = SAXParserFactory.newInstance();
         spf.setNamespaceAware(true);
         SAXParser saxParser;
@@ -36,7 +35,7 @@ public class OptionsFileIO_XML implements OptionsTypedFileIO {
 			saxParser = spf.newSAXParser();
 	        XMLReader xmlReader = saxParser.getXMLReader();
 	        xmlReader.setContentHandler(new OptionsSAXHandler(into));
-	        xmlReader.parse(file);
+	        xmlReader.parse(configFileName);
 		} catch (ParserConfigurationException | SAXException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -52,7 +51,7 @@ public class OptionsFileIO_XML implements OptionsTypedFileIO {
      * @throws IOException If the file cannot be written
      */
 	@Override
-    public void writeConfiguration(String configName, OptionsCont options) throws IOException {
+    public boolean writeConfiguration(String configName, OptionsCont options) throws IOException {
     	Vector<String> optionNames = options.getSortedOptionNames();
     	FileWriter fileWriter = new FileWriter(configName);
     	fileWriter.append("<configuration>\n");
@@ -64,6 +63,7 @@ public class OptionsFileIO_XML implements OptionsTypedFileIO {
     	}
     	fileWriter.append("</configuration>\n");
     	fileWriter.close();
+    	return true;
     }
 
     
@@ -74,7 +74,7 @@ public class OptionsFileIO_XML implements OptionsTypedFileIO {
      * @throws IOException If the file cannot be written
      */
 	@Override
-    public void writeTemplate(String configName, OptionsCont options) throws IOException {
+    public boolean writeTemplate(String configName, OptionsCont options) throws IOException {
     	Vector<String> optionNames = options.getSortedOptionNames();
     	FileWriter fileWriter = new FileWriter(configName);
     	fileWriter.append("<configuration>\n");
@@ -84,6 +84,7 @@ public class OptionsFileIO_XML implements OptionsTypedFileIO {
     	}
     	fileWriter.append("</configuration>\n");
     	fileWriter.close();
+    	return true;
     }
 
     
