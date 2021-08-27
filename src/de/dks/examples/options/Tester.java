@@ -177,7 +177,7 @@ public class Tester {
             OptionsCont options = loadDefinition();
             // parse options
             if(OptionsIO.parseAndLoad(options, args, fileIO, configOptionName, false, false)) {
-            	OptionsIO.printHelp(System.out, options, 80, 2, 2, 1);
+            	OptionsIO.printHelp(System.out, options, 80, 2, 2, 1, 1);
                 System.out.println("-------------------------------------------------------------------------------");
                 OptionsIO.printSetOptions(System.out, options, true, false, false);
                 System.out.println("-------------------------------------------------------------------------------");

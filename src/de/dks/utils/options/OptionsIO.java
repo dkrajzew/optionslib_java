@@ -96,8 +96,9 @@ public class OptionsIO {
      * @param[in] optionIndent The indent to use before writing an option
      * @param[in] divider The space between the option name and the description
      * @param[in] sectionIndent The indent to use before writing a section name
+     * @param[in] sectionDivider The number of empty lines before a new section starts 
      */
-    public static void printHelp(PrintStream os, OptionsCont options, int maxWidth, int optionIndent, int divider, int sectionIndent) {
+    public static void printHelp(PrintStream os, OptionsCont options, int maxWidth, int optionIndent, int divider, int sectionIndent, int sectionDivider) {
     	Vector<String> optionNames = options.getSortedOptionNames();
     	String helpHead = options.getHelpHead();
     	String helpTail = options.getHelpTail();
@@ -125,7 +126,12 @@ public class OptionsIO {
         	String name = i.next();
             // check whether a new section starts
             String optSection = options.getSection(name);
-            if(optSection!=null&&!"".contentEquals(optSection)&&lastSection!=optSection) {
+            if(optSection!=null && !"".contentEquals(optSection) && lastSection!=optSection) {
+            	if(!"".equals(lastSection)) {
+            		for(int k=0; k<sectionDivider; ++k) {
+            			System.out.println("");
+            		}
+            	}
                 lastSection = optSection;
                 os.println(sectionIndentSting+lastSection);
             }

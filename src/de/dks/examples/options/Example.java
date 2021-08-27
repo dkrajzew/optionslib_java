@@ -67,7 +67,7 @@ public class Example {
             // check for additional (meta) options
             if(options.getBool("help")) {
                 // print the help screen
-                OptionsIO.printHelp(System.out, options, 80, 2, 2, 1);
+                OptionsIO.printHelp(System.out, options, 80, 2, 2, 1, 1);
             } else {
                 // do something
                 String name = options.getString("name");
