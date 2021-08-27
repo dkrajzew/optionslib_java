@@ -6,15 +6,15 @@ import java.util.Vector;
 /**
  * @class OptionsParser
  * @brief Static helpers for parsing options from command line.
- * @author Daniel Krajzewicz 
- * @copyright (c) Daniel Krajzewicz 2004-2021
- * @license Eclipse Public License v2.0 (EPL v2.0) 
+ * @author Daniel Krajzewicz (daniel@krajzewicz.de)
+ * @copyright Eclipse Public License v2.0 (EPL v2.0), (c) Daniel Krajzewicz 2004-2021
  */
 public class OptionsParser {
     /** @brief Parses the given options into the given container
      * @param[in] into The options container to fill
      * @param[in] args The arguments given on the command line
      * @param[in] continueOnError Continues even if an error occures while parsing
+     * @return Whether parsing was successful
      */
     public static boolean parse(OptionsCont into, String[] args, boolean continueOnError) {
         boolean ok = true;

@@ -2,12 +2,11 @@ package de.dks.utils.options;
 
 /**
  * @class Option_FileName
- * @brief A derivation from Option for storing file names.
+ * @brief A derivation from Option_String for storing file names.
  * @see Option
  * @see Option_String
- * @author Daniel Krajzewicz 
- * @copyright (c) Daniel Krajzewicz 2004-2021
- * @license Eclipse Public License v2.0 (EPL v2.0) 
+ * @author Daniel Krajzewicz (daniel@krajzewicz.de)
+ * @copyright Eclipse Public License v2.0 (EPL v2.0), (c) Daniel Krajzewicz 2004-2021
  */
 public class Option_FileName extends Option_String {
     /** @brief Constructor

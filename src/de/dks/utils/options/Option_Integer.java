@@ -1,12 +1,11 @@
 package de.dks.utils.options;
 
 /**
- * @class Option_Double
+ * @class Option_Integer
  * @brief A derivation from Option for storing integer values.
  * @see Option
- * @author Daniel Krajzewicz 
- * @copyright (c) Daniel Krajzewicz 2004-2021
- * @license Eclipse Public License v2.0 (EPL v2.0) 
+ * @author Daniel Krajzewicz (daniel@krajzewicz.de)
+ * @copyright Eclipse Public License v2.0 (EPL v2.0), (c) Daniel Krajzewicz 2004-2021
  */
 public class Option_Integer extends Option {
     /// @brief The value (no default)
@@ -44,7 +43,7 @@ public class Option_Integer extends Option {
     
     
     /** @brief Sets the given value
-     * @param value The value to set
+     * @param[in] valueS The given string value that shall be translated to int 
      */
     @Override
     public void set(String valueS) {

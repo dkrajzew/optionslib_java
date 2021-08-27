@@ -9,9 +9,8 @@ import java.util.Vector;
 /**
  * @class OptionsCont
  * @brief An options storing container.
- * @author Daniel Krajzewicz 
- * @copyright (c) Daniel Krajzewicz 2004-2021
- * @license Eclipse Public License v2.0 (EPL v2.0) 
+ * @author Daniel Krajzewicz (daniel@krajzewicz.de)
+ * @copyright Eclipse Public License v2.0 (EPL v2.0), (c) Daniel Krajzewicz 2004-2021
  */
 public class OptionsCont {
     /// @brief A map from option names to options
@@ -31,9 +30,14 @@ public class OptionsCont {
     
     
 
-    /** @brief A string-by-length comparator
+    /** @brief A string-by-length comparator (increasing length)
      */
     public class SortByLengthComparator implements Comparator<String> {
+    	/** @brief Comparator function
+    	 * @param[in] obj1 The first item to compare
+    	 * @param[in] obj2 The second item to compare
+    	 * @return Whether the length of the first string is smaller than the one of the second string
+    	 */
         public int compare(String obj1, String obj2) {
             if(obj1.length() == obj2.length()) {
                 return 0;
@@ -118,7 +122,6 @@ public class OptionsCont {
      * The description is what appears in the help menu
      * @param[in] name The name of the option
      * @param[in] desc The description of the option
-     * @param[in] semType The type of the value
      */
     public void setDescription(String name, String desc) {
         Option o = getOption(name);
@@ -250,6 +253,7 @@ public class OptionsCont {
 
 
     /** @brief Returns whether the named option's value is its default value
+     * @param[in] name The name of the option to check whether it has the default value
      * @return Whether the named option has the default value
      */
      public boolean isDefault(String name) {

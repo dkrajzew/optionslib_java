@@ -4,9 +4,8 @@ package de.dks.utils.options;
  * @class Option_Bool
  * @brief A derivation from Option for storing boolean values.
  * @see Option
- * @author Daniel Krajzewicz 
- * @copyright (c) Daniel Krajzewicz 2004-2021
- * @license Eclipse Public License v2.0 (EPL v2.0) 
+ * @author Daniel Krajzewicz (daniel@krajzewicz.de)
+ * @copyright Eclipse Public License v2.0 (EPL v2.0), (c) Daniel Krajzewicz 2004-2021
  */
 public class Option_Bool extends Option {
     /// @brief The value (false by default)
@@ -32,7 +31,7 @@ public class Option_Bool extends Option {
     /** @brief Sets the given value
      * 
      * "t", "true", and "1" are interpreted as true, "f", "false", and "0" as false.
-     * @param value The value to set
+     * @param[in] value The given string value that shall be translated to double 
      */
     @Override
     public void set(String value) {
