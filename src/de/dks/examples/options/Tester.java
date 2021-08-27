@@ -14,7 +14,10 @@ import de.dks.utils.options.Option_FileName;
 import de.dks.utils.options.Option_Integer;
 import de.dks.utils.options.Option_String;
 import de.dks.utils.options.OptionsCont;
+import de.dks.utils.options.OptionsFileIO_CSV;
+import de.dks.utils.options.OptionsFileIO_XML;
 import de.dks.utils.options.OptionsIO;
+import de.dks.utils.options.OptionsTypedFileIO;
 
 /**
  * @class Tester
@@ -25,13 +28,16 @@ import de.dks.utils.options.OptionsIO;
  * definitions of options and other things to set up the options container. 
  * Then the application performs the things defined by the 
  * http://texttest.sourceforge.net/ test system.
- * @author Daniel Krajzewicz 
- * @copyright (c) Daniel Krajzewicz 2004-2021
- * @license Eclipse Public License v2.0 (EPL v2.0) 
+ * 
+ * @author Daniel Krajzewicz (daniel@krajzewicz.de)
+ * @copyright Eclipse Public License v2.0 (EPL v2.0), (c) Daniel Krajzewicz 2019-2021
  */
 public class Tester {
     /// @brief The (optional) configuration file name
     private static String configOptionName = "";
+    
+    /// @brief The (optional) configuration reader
+    private static OptionsTypedFileIO fileIO = null;
     
     
     /** @brief Loads the definition for setting up options
@@ -87,6 +93,14 @@ public class Tester {
                 }
                 if("CONFIG".equals(type)) {
                     configOptionName = synonyms.elementAt(0);
+                    if(configOptionName.startsWith("xml")) {
+                    	fileIO = new OptionsFileIO_XML();
+                    } else if(configOptionName.startsWith("csv")) {
+                    	fileIO = new OptionsFileIO_CSV();
+                    } else {
+                    	in.close();
+                    	throw new IOException("Unknown configuration format");
+                    }
                     continue;
                 }
                 // ... is it a named section begin?
@@ -162,7 +176,7 @@ public class Tester {
             // load the definition
             OptionsCont options = loadDefinition();
             // parse options
-            if(OptionsIO.parseAndLoad(options, args, configOptionName, false, false)) {
+            if(OptionsIO.parseAndLoad(options, args, fileIO, configOptionName, false, false)) {
             	OptionsIO.printHelp(System.out, options, 80, 2, 2, 1);
                 System.out.println("-------------------------------------------------------------------------------");
                 OptionsIO.printSetOptions(System.out, options, true, false, false);

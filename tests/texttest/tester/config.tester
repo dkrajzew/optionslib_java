@@ -4,6 +4,7 @@ executable:de.dks.examples.options.Tester
 copy_test_path:optionslib.jar
 copy_test_path:options.txt
 copy_test_path:config.xml
+copy_test_path:config.csv
 
 [run_dependent_text]
 stdout:{INTERNAL writedir}{REPLACE <writedir>}

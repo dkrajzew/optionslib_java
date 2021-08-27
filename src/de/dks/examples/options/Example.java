@@ -19,13 +19,13 @@ import de.dks.utils.options.OptionsIO;
  * A very basic example for using the options. It's basically a "Hello World"-application
  * that allows you to give a name and a greet on the command line. 
  * The default for the name is "World" by default, but may be defined using the option 
- * --name <NAME>, or -n <NAME> for short. The default for the greet is "Hello" by default, 
- * but may be defined using the option --greet <GREET>, or -g <GREET> for short. 
- * Additionally, you may optionally change the number of times "<GREET> <NAME>!" is 
+ * --name &lt;NAME&gt;, or -n &lt;NAME&gt; for short. The default for the greet is "Hello" by default, 
+ * but may be defined using the option --greet &lt;GREET&gt;, or -g &lt;GREET&gt; for short. 
+ * Additionally, you may optionally change the number of times "&lt;GREET&gt; &lt;NAME&gt;!" is 
  * printed using the option --repeat (or -r for short).
- * @author Daniel Krajzewicz 
- * @copyright (c) Daniel Krajzewicz 2004-2021
- * @license Eclipse Public License v2.0 (EPL v2.0) 
+ * 
+ * @author Daniel Krajzewicz (daniel@krajzewicz.de)
+ * @copyright Eclipse Public License v2.0 (EPL v2.0), (c) Daniel Krajzewicz 2019-2021
  */
 public class Example {
 	/** @brief Builds the options container and sets the values from the given options
@@ -50,7 +50,7 @@ public class Example {
         options.add("help", '?', new Option_Bool());
         options.setDescription("help", "Prints this help screen.");
         // parse
-        OptionsIO.parseAndLoad(options, args, "", false, false);
+        OptionsIO.parseAndLoad(options, args, null, "", false, false);
         return options;
     }
 
