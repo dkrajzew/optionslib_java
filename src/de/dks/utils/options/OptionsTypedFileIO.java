@@ -17,24 +17,24 @@ public abstract class OptionsTypedFileIO {
 	 * 
 	 * @see _loadConfiguration(OptionsCont, String)
 	 * @param into The options container to fill
-	 * @param configFileName The name of the option to retrieve the file name from
+	 * @param configOptionName The name of the option to retrieve the file name from
 	 * @return Whether options could be loaded
 	 * @throws IOException If the file cannot be read
 	 */
-	public boolean loadConfiguration(OptionsCont into, String configFileName) throws IOException {
+	public boolean loadConfiguration(OptionsCont into, String configOptionName) throws IOException {
 		String parentName = into.getParentConfigurationName();
+		String fileName = into.getString(configOptionName);
 		boolean ok = true;
 		do {
 			if(parentName!=null && !"".equals(parentName)) {
 				into.remarkUnset(parentName);
 			}
-			ok &= _loadConfiguration(into, configFileName);
+			ok &= _loadConfiguration(into, fileName);
+			fileName = null;
 			if(parentName!=null && !"".equals(parentName) && into.isSet(parentName)) {
-				configFileName = into.getString(parentName);
-			} else {
-				configFileName = null;
+				fileName = into.getString(parentName);
 			}
-		} while (ok && configFileName!=null);
+		} while (ok && fileName!=null);
 		return ok;
 	}
 	

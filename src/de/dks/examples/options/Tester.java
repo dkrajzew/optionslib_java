@@ -176,11 +176,7 @@ public class Tester {
             // load the definition
             OptionsCont options = loadDefinition();
             // parse options
-            String configFileName = "";
-            if(configOptionName!=null) {
-            	configFileName = options.getString(configOptionName);
-            }
-            if(OptionsIO.parseAndLoad(options, args, fileIO, configFileName, false, false)) {
+            if(OptionsIO.parseAndLoad(options, args, fileIO, configOptionName, false, false)) {
             	OptionsIO.printHelp(System.out, options, 80, 2, 2, 1, 1);
                 System.out.println("-------------------------------------------------------------------------------");
                 OptionsIO.printSetOptions(System.out, options, true, false, false);
