@@ -28,6 +28,9 @@
         </developer>
     </developers>
 
+    <dependencies>
+    </dependencies>
+    
     <scm>
         <connection>scm:git:git://github.com/github.com/dkrajzew/optionslib_java.git</connection>
         <developerConnection>scm:git:ssh://github.com:dkrajzew/optionslib_java.git</developerConnection>
