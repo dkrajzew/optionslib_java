@@ -36,12 +36,12 @@ public class Option_Bool extends Option {
     @Override
     public void set(String value) {
         value = value.toLowerCase();
-        if(value=="t"||value=="true"||value=="1") {
+        if("t".equals(value)||"true".equals(value)||"1".equals(value)) {
             myValue = true;
-        } else if(value=="f"||value=="false"||value=="0") {
+        } else if("f".equals(value)||"false".equals(value)||"0".equals(value)) {
             myValue = false;
         } else {
-            throw new NumberFormatException("inconvertible");
+            throw new NumberFormatException("Could not convert '" + value + "' to a boolean");
         }
         setSet();
     }
