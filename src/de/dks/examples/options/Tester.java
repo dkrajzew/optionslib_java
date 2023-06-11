@@ -39,6 +39,29 @@ public class Tester {
     /// @brief The (optional) configuration reader
     private static OptionsTypedFileIO fileIO = null;
     
+    /// @brief The maximum terminal width
+    private static int maxWidth = 80;
+
+    /// @brief The option indentation
+    private static int optionIndent = 2;
+
+    /// @brief The space between option names and descriptions
+    private static int divider = 2;
+
+    /// @brief The section indentation
+    private static int sectionIndent = 1;
+
+    /// @brief The space between sections
+    private static int sectionDivider = 1;
+    
+    /// @brief The file name to save the configuration under
+    private static String saveConfigName = null;
+
+    /// @brief The file name to save the template under
+    private static String saveTemplateName = null;
+
+    
+    
     
     /** @brief Loads the definition for setting up options
      * 
@@ -86,6 +109,7 @@ public class Tester {
                         synonyms.add(s);
                     }
                 }
+                
                 // ... is it the tail/head help stuff?
                 if("HELPHEADTAIL".equals(type)) {
                     options.setHelpHeadAndTail(synonyms.elementAt(0), synonyms.elementAt(1));
@@ -103,11 +127,45 @@ public class Tester {
                     }
                     continue;
                 }
+                
                 // ... is it a named section begin?
                 if("SECTION".equals(type)) {
                     options.beginSection(synonyms.elementAt(0));
                     continue;
                 }
+                
+                // ... is one of the help formatting options
+                if("MAX_WIDTH".equals(type)) {
+                    maxWidth = Integer.parseInt(synonyms.elementAt(0));
+                    continue;
+                }
+                if("OPTION_INDENT".equals(type)) {
+                    optionIndent = Integer.parseInt(synonyms.elementAt(0));
+                    continue;
+                }
+                if("DIVIDER".equals(type)) {
+                    divider = Integer.parseInt(synonyms.elementAt(0));
+                    continue;
+                }
+                if("SECTION_INDENT".equals(type)) {
+                    sectionIndent = Integer.parseInt(synonyms.elementAt(0));
+                    continue;
+                }
+                if("SECTION_DIVIDER".equals(type)) {
+                    sectionDivider = Integer.parseInt(synonyms.elementAt(0));
+                    continue;
+                }
+
+                // ... is a save config / template option
+                if("SAVE_CONFIG".equals(type)) {
+                    saveConfigName = synonyms.elementAt(0);
+                    continue;
+                }
+                if("SAVE_TEMPLATE".equals(type)) {
+                    saveTemplateName = synonyms.elementAt(0);
+                    continue;
+                }
+                
                 // ... build the option, first
                 Option option = null;
                 if("INT".equals(type)) {
@@ -177,10 +235,28 @@ public class Tester {
             OptionsCont options = loadDefinition();
             // parse options
             if(OptionsIO.parseAndLoad(options, args, fileIO, configOptionName, false, false)) {
-            	OptionsIO.printHelp(System.out, options, 80, 2, 2, 1, 1);
+            	OptionsIO.printHelp(System.out, options, maxWidth, optionIndent, divider, sectionIndent, sectionDivider);
                 System.out.println("-------------------------------------------------------------------------------");
                 OptionsIO.printSetOptions(System.out, options, true, false, false);
                 System.out.println("-------------------------------------------------------------------------------");
+            }
+            OptionsFileIO_XML xmlWriter = new OptionsFileIO_XML();
+            OptionsFileIO_CSV csvWriter = new OptionsFileIO_CSV();
+            if(saveConfigName!=null) {
+                if(saveConfigName.indexOf(".xml")>=0) {
+                    xmlWriter.writeConfiguration(saveConfigName, options);
+                }
+                if(saveConfigName.indexOf(".xml")>=0) {
+                    csvWriter.writeConfiguration(saveConfigName, options);
+                }
+            }
+            if(saveTemplateName!=null) {
+                if(saveTemplateName.indexOf(".xml")>=0) {
+                    xmlWriter.writeTemplate(saveTemplateName, options);
+                }
+                if(saveTemplateName.indexOf(".xml")>=0) {
+                    csvWriter.writeTemplate(saveTemplateName, options);
+                }
             }
         } catch(Exception e) {
             System.err.println(e.toString());
