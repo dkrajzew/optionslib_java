@@ -1,6 +1,6 @@
-on: [push]
-
 name: maven-build
+
+on: [push]
 
 jobs:
   build:
