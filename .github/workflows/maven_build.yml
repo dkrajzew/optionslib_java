@@ -1,5 +1,7 @@
 on: [push]
 
+name: maven-build
+
 jobs:
   build:
     runs-on: ubuntu-latest
